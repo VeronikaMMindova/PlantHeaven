@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title%}About Us - Plant Forum{% endblock %}
+{% block extra_css %}<link rel="stylesheet" href="{% static 'css/about_us.css' %}">{% endblock %}
+
+
+{% block content %}
+    <main class="about-us">
+        <section class="intro">
+            <h1>About Us</h1>
+            <p>Welcome to Plant Forum! We are a community of plant enthusiasts who come together to share knowledge, tips, and a love for all things green. Whether you're a seasoned gardener or a curious beginner, our platform is here to help you grow your passion for plants.</p>
+        </section>
+
+        <section class="our-mission">
+            <h2>Our Mission</h2>
+            <p>Our mission is to create a space where plant lovers can connect, inspire one another, and cultivate their skills. From discussing rare plant species to solving gardening challenges, we aim to be your go-to resource for all things plants.</p>
+        </section>
+
+        <section class="our-community">
+            <h2>Our Community</h2>
+            <p>At Plant Forum, community is at the heart of what we do. With members from around the globe, our platform celebrates diversity and inclusivity. Share your plant journey, learn from others, and make meaningful connections with fellow plant enthusiasts.</p>
+        </section>
+
+        <section class="join-us">
+            <h2>Join Us</h2>
+            <p>Ready to dive in? Become a part of the Plant Forum family today! Sign up to access our discussion boards, expert advice, and exclusive resources tailored to help your plants thrive.</p>
+            <a href="{% url 'register' %}" class="btn">Sign Up Now</a>
+        </section>
+    </main>
+{% endblock %}
+

@@ -1,0 +1,84 @@
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #2c3e50; /* Light grey background */
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    text-align: center;
+    background-image: linear-gradient(to right, #3e4a47, #47a747); /* Gradient background */
+}
+
+.error-container {
+    background-color: #dfd6a3;
+    padding: 40px;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    max-width: 600px;
+    width: 90%;
+    animation: fadeIn 1s ease-in-out;
+    text-shadow: 1px 1px 5px rgba(0, 0, 0, 0.1); /* Subtle shadow for text */
+}
+
+.error-image img {
+    width: 100%;
+    max-width: 400px;
+    margin-bottom: 20px;
+    border-radius: 8px; /* Rounded corners for the image */
+}
+
+.error-code {
+    font-size: 120px;
+    color: #e74c3c; /* Red color for error code */
+    margin: 0;
+    animation: bounce 1s infinite alternate;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.error-message {
+    font-size: 28px;
+    color: #2f422f; /* Orange color for the message */
+    margin-top: 0;
+    font-weight: bold;
+}
+
+.error-description {
+    font-size: 18px;
+    color: #2c3e50; /* Darker text color for the description */
+    margin: 20px 0;
+}
+
+.home-link {
+    font-size: 18px;
+    color: #fff;
+    background-color: #27ae60; /* Green button background */
+    padding: 12px 25px;
+    text-decoration: none;
+    border-radius: 5px;
+    margin-top: 20px;
+    box-shadow: 0 5px 10px rgba(0, 128, 0, 0.3); /* Green shadow for the button */
+    transition: background-color 0.3s ease, transform 0.3s ease;}
+.home-link:hover {
+    background-color: #2ecc71; /* Lighter green on hover */
+    transform: scale(1.05); /* Slight scaling effect on hover */
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes bounce {
+    from {
+        transform: translateY(0);
+    }
+    to {
+        transform: translateY(-20px);
+    }
+}

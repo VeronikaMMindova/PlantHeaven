@@ -1,0 +1,108 @@
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #fcf6f3;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+h1, h2{
+    font-family: 'Arial', sans-serif;
+    margin-bottom: 15px;
+}
+h1.welcome {
+    color: #e3e5e3;
+    font-size: 2em;
+    font-weight: bold;
+    text-align: center;
+    margin-top: 20px;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+}
+h1.admin-dashboard {
+    font-size: 2em;
+    font-weight: bold;
+    border-bottom: 2px solid #6fc76f;
+    padding-bottom: 10px;
+    text-align: center;
+    color: darkslategray;
+}
+
+h2 {
+    font-size: 1.5em;
+    color: #6fc76f;
+}
+
+ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+ul li {
+    margin-bottom: 10px;
+    padding: 15px;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+.deleted-posts li {
+    background: #ffffff;
+    padding: 15px;
+    border-radius: 5px;
+}
+.active-users li{
+    background: #ffffff;
+    padding: 15px;
+    border-radius: 5px;
+}
+.comments li{
+    background: #ffffff;
+    padding: 15px;
+    border-radius: 5px;
+}
+
+
+ul li p {
+    margin: 10px 0 5px;
+    font-size: 1em;
+    color: #333;
+}
+
+ul li small {
+    font-size: 0.9em;
+    color: #777;
+}
+
+/* Section Margins */
+section {
+    margin-top: 40px;
+    padding: 20px;
+    background-color: #e7efe7;
+    border-radius: 8px;
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1);
+}
+
+h1 + h1 {
+    color: red;
+    font-weight: bold;
+    text-align: center;
+    margin-top: 20px;
+}
+
+@media (max-width: 768px) {
+    .container {
+        padding: 10px;
+    }
+
+    h1 {
+        font-size: 1.8em;
+    }
+
+    h2 {
+        font-size: 1.3em;
+    }
+
+    ul li {
+        font-size: 0.9em;
+    }
+}

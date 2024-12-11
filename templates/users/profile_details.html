@@ -1,0 +1,48 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Profile Details{% endblock %}
+{% block extra_css %}<link rel="stylesheet" href="{% static 'css/profile_details.css' %}" >{% endblock %}
+{% block content %}
+{# <h1>{{ profile.user.username }}'s Profile</h1>#}
+{#    <p>Profile Picture: {{ profile.profile_pic }}</p>#}
+{#    <p>First Name: {{ profile.first_name }}</p>#}
+{#    <p>Last Name: {{ profile.last_name }}</p>#}
+{#    <p>Bio: {{ profile.bio }}</p>#}
+{#    <p>Facebook: <a href="{{ profile.facebook_url }}">{{ profile.facebook_url }}</a></p>#}
+{#    <p>Instagram: <a href="{{ profile.instagram_url }}">{{ profile.instagram_url }}</a></p>#}
+   <div class="profile-container">
+    <div class="profile-header">
+        {% if profile.profile_pic %}
+            <img src="{{ profile.profile_pic.url }}" alt="Profile Picture" class="profile-pic">
+        {% else %}
+            <div class="profile-placeholder">
+                <span>{{ profile.user.username|slice:":1" }}</span>
+            </div>
+        {% endif %}
+        <h1 class="profile-username">{{ profile.user.username }}</h1>
+    </div>
+
+    <div class="profile-details">
+        <p><strong>First Name:</strong> {{ profile.first_name|default:"Not provided" }}</p>
+        <p><strong>Last Name:</strong> {{ profile.last_name|default:"Not provided" }}</p>
+        <p><strong>Bio:</strong> {{ profile.bio|default:"No bio added yet." }}</p>
+        <p>
+            <strong>Facebook:</strong>
+            {% if profile.facebook_url %}
+                <a href="{{ profile.facebook_url }}" target="_blank">{{ profile.facebook_url }}</a>
+            {% else %}
+                Not linked.
+            {% endif %}
+        </p>
+        <p>
+            <strong>Instagram:</strong>
+            {% if profile.instagram_url %}
+                <a href="{{ profile.instagram_url }}" target="_blank">{{ profile.instagram_url }}</a>
+            {% else %}
+                Not linked.
+            {% endif %}
+        </p>
+    </div>
+</div>
+{% endblock %}

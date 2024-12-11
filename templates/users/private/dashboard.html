@@ -1,0 +1,83 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Dashboard{% endblock %}
+{% block extra_css %}
+    <link rel="stylesheet" href="{% static 'css/dashboard.css' %}">
+{% endblock %}
+{% block content %}
+{% if user.is_staff %}
+    <h1 class="welcome">Welcome to the Staff Dashboard, {{ request.user.username }}</h1>
+{% else %}
+    <h1>Unauthorized Access</h1>
+{% endif %}
+<div class="container mt-5">
+    <h1 class="admin-dashboard">Dashboard</h1>
+
+    <section class="mt-4">
+        <h2>Deleted Posts</h2>
+        {% if deleted_posts %}
+            <ul class="deleted-posts">
+                {% for post in deleted_posts %}
+                    <li>
+                        <strong>{{ post.title }}</strong> - Deleted by {{ post.author }}
+                        on {{ post.updated_at|date:"Y-m-d H:i" }}
+                    </li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            <p>No deleted posts found.</p>
+        {% endif %}
+    </section>
+
+
+    <section class="mt-4">
+        <h2>Active Users (Last 30 Days)</h2>
+        {% if active_users %}
+            <ul class="active-users">
+                {% for user in active_users %}
+                    <li>
+                        {{ user.username }} - Last login: {{ user.last_login|date:"Y-m-d H:i" }}
+                    </li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            <p>No active users found in the last 30 days.</p>
+        {% endif %}
+    </section>
+
+
+    <section class="mt-4">
+        <h2>Latest Comments</h2>
+        {% if latest_comments %}
+            <ul class="comments">
+                {% for comment in latest_comments %}
+                    <li>
+                        <strong>{{ comment.author }}</strong> on <em>{{ comment.post.title }}</em>:
+                        <p>{{ comment.body }}</p>
+                        <small>Commented on {{ comment.created_at|date:"Y-m-d H:i" }}</small>
+                    </li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            <p>No recent comments found.</p>
+        {% endif %}
+    </section>
+
+
+    <section class="mt-4">
+        <h2>Top Liked Posts</h2>
+        {% if posts_with_likes %}
+            <ul class="top-liked-posts">
+                {% for post in posts_with_likes %}
+                    <li>
+                        <strong>{{ post.title }}</strong> by {{ post.author }} - {{ post.num_likes }} likes
+                    </li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            <p>No liked posts found.</p>
+        {% endif %}
+    </section>
+</div>
+{% endblock %}

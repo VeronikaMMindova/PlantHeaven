@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Edit profile page{% endblock %}
+{% block extra_css %}<link rel="stylesheet" href="{% static 'css/edit_profile.css' %}" >{% endblock %}
+{% block content %}
+
+
+{% if user.is_authenticated%}
+    <h1>Edit profile</h1>
+<div class="form-group">
+    <form method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ form.as_p}}
+
+        <button class="btn btn-outline-success">Update Your Profile</button>
+    </form>
+<a href="{% url 'change_password' pk=user.pk%}" class="button">Set New Password</a>
+</div>
+
+{% else %}
+<h2>You're not logged in</h2>
+{% endif %}
+
+
+{% endblock %}

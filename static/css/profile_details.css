@@ -1,0 +1,59 @@
+
+
+.profile-container {
+    max-width: 800px;
+    margin: 3rem auto;
+    padding: 2rem;
+    background: linear-gradient(#303d30, 20%, #aad294);
+    border-radius: 10px;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.profile-header {
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
+.profile-pic {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 4px solid #e0e0e0;
+    margin-bottom: 1rem;
+}
+
+.profile-placeholder {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    background: #e0e0e0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 2rem;
+    font-weight: bold;
+    color: #666;
+    margin: 0 auto 1rem;
+}
+
+.profile-username {
+    font-family: 'Patrick Hand', cursive;
+    font-size: 3rem;
+    color: #303d30;
+}
+
+.profile-details p {
+    margin: 0.5rem 0;
+    font-size: 1.4rem;
+    color: #333;
+}
+
+.profile-details a {
+    color: #3498db;
+    text-decoration: none;
+}
+
+.profile-details a:hover {
+    text-decoration: underline;
+}

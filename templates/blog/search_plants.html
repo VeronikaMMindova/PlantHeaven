@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Search Plants{% endblock %}
+{% block extra_css %}<link rel="stylesheet" href="{% static 'css/search_plants.css' %}" >{% endblock %}
+
+
+{% block content %}
+    <div class="container">
+        <h1>Search Plants</h1>
+        <form method="get" action="{% url 'search_plants' %}">
+            <input type="text" name="q" value="{{ query }}" placeholder="Search for a plant by name..." required>
+            <button type="submit">Search</button>
+        </form>
+        {% if plants %}
+            <ul>
+                {% for plant in plants %}
+                    <li>{{ plant.name }} ({{ plant.type_of_plant }}) - {{ plant.habitat }}</li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            <p class="no-results">{% if query %}No plants found matching "{{ query }}".{% else %}Enter a plant name to search.{% endif %}</p>
+        {% endif %}
+    </div>
+
+{% endblock %}

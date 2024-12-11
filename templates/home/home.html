@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Home{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/home.css' %}">
+{% endblock %}
+
+{% block content %}
+<section class="hero">
+    {% if user.is_authenticated %}
+        <h1>Welcome to Plant Heaven, {{ user.username }}!</h1>
+        <p>Your go-to source for plant care tips, guides, and all things green!</p>
+        <a href="{% url 'add_post' %}" class="btn-primary">Create Post</a>
+    {% else %}
+        <h1>Welcome to Plant Heaven</h1>
+        <p>Your go-to source for plant care tips, guides, and all things green!</p>
+        <p>Please <a href="{% url 'login' %}" class="btn-primary">Log In</a> to create posts and enjoy personalized features.</p>
+    {% endif %}
+</section>
+
+<section class="cards" id="plant-care">
+    {% for post in featured_posts %}
+        <div class="card">
+            <img src="{% static post.image %}" alt="{{ post.title }}">
+            <h3>{{ post.title }}</h3>
+            <p>{{ post.description }}</p>
+            <a href="{% url 'category_plants' category_name=post.category_name %}" class="btn-primary">Explore {{ post.category_name|title }} Plants</a>
+        </div>
+    {% endfor %}
+</section>
+{% endblock %}

@@ -1,0 +1,54 @@
+
+.about-us {
+    max-width: 800px;
+    margin: 2rem auto;
+    padding: 0 1rem;
+    background-color: #e5ece3;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    text-align: center;
+}
+
+.about-us section {
+    margin-bottom: 2rem;
+    padding: 1.5rem;
+    border-bottom: 1px solid #eaeaea;
+}
+
+.about-us section:last-of-type {
+    border-bottom: none;
+}
+
+.about-us h1, .about-us h2 {
+    color: #303d30;
+    margin-bottom: 1rem;
+    font-family: 'Dancing Script', cursive;
+    text-align: center;
+}
+
+.about-us p {
+    margin-bottom: 1rem;
+}
+
+.about-us .btn {
+    display: inline-block;
+    padding: 0.75rem 1.5rem;
+    background: #596b59;
+    color: white;
+    text-decoration: none;
+    border-radius: 5px;
+    transition: background 0.3s;
+}
+
+.about-us .btn:hover {
+    background: #a2d5ab;
+}
+
+/* Footer Styles */
+.footer {
+    text-align: center;
+    padding: 1rem 0;
+    background: linear-gradient(to right, #3e4a47, #47a747);
+    color: white;
+    margin-top: 2rem;
+}

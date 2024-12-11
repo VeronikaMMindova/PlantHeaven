@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+{% block title %}Edit blog post{% endblock %}
+{% block content %}
+
+{% if user.is_authenticated %}
+    {% if user.id == post.author.id %}
+    <h1>Edit blog post</h1>
+    <div class="form-group">
+        <form method="POST">
+            {% csrf_token %}
+            {{ form.media}}
+            {{ form.as_p}}
+            <button class="btn btn-info">Update</button>
+        </form>
+    </div>
+    {% else %}
+        You can't modify post, written by other user
+        {% endif %}
+{% else %}
+    <h2>You can't modify without profile</h2>
+{% endif %}
+{% endblock %}

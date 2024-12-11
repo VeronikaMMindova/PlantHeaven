@@ -1,0 +1,75 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block extra_css %}<link rel="stylesheet" href="{% static 'css/post_details.css' %}">{% endblock %}
+{% block title %} {{ post.title }}{% endblock %}
+{% block content %}
+<div class="container">
+    <div class="post-detail">
+        <h1>{{ post.title }}</h1>
+
+        {% if post.image %}
+            <img src="{{ post.image.url }}" alt="{{ post.title }}" class="post-image">
+        {% endif %}
+
+        <p class="post-description">{{ post.description }}</p>
+        <p><strong>Category:</strong> {{ post.category.name }}</p>
+        <p><strong>Author:</strong> {{ post.author.user.username }}</p>
+        <p><strong>Created at:</strong> {{ post.created_at }}</p>
+        <p><strong>Updated at:</strong> {{ post.updated_at }}</p>
+        <p><strong>Total Likes:</strong> {{ post.total_likes }}</p>
+
+        {% if request.user.is_authenticated %}
+            <form method="post" action="{% url 'like_post' post.id %}">
+                {% csrf_token %}
+                <button type="submit" class="like-btn">
+                    {% if request.user.profile in post.likes.all %}
+                        Unlike
+                    {% else %}
+                        Like
+                    {% endif %}
+                </button>
+            </form>
+
+            <!-- Delete Button (Only for the Author) -->
+            {% if request.user == post.author.user %}
+                <form method="post" action="{% url 'confirm_delete_post' post.pk %}">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-danger">Delete Post</button>
+                </form>
+                 <a href="{% url 'update_post' post.pk %}" class="btn btn-warning">Edit Post</a>
+            {% endif %}
+        {% else %}
+            <p><a href="{% url 'login' %}">Log in</a> to like or delete this post.</p>
+        {% endif %}
+     <!-- Comments Section -->
+    <div class="comments-section">
+        <h2>Comments</h2>
+
+        {% if comments %}
+            <ul>
+                {% for comment in comments %}
+                    <li>
+                        <p><strong>{{ comment.user.user }}</strong> says:</p>
+                        <p>{{ comment.content }}</p>
+                        <p><em>Posted on: {{ comment.created_at }}</em></p>
+                    </li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            <p>No comments yet. Be the first to comment!</p>
+        {% endif %}
+
+        {% if request.user.is_authenticated %}
+            <!-- Comment Form -->
+            <form method="post">
+                {% csrf_token %}
+                <textarea name="comment_text" class="form-control" rows="3" placeholder="Add your comment..."></textarea>
+                <button type="submit" class="btn btn-primary mt-2">Submit Comment</button>
+            </form>
+        {% else %}
+            <p><a href="{% url 'login' %}">Log in</a> to leave a comment.</p>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}
+</div>

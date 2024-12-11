@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+{% block title %}Plants in Our Collection{% endblock %}
+{% block extra_css %}{% endblock %}
+{% block content %}
+
+<div class="filter">
+    <h3>Filter by Category</h3>
+    <ul>
+        {% for category in categories %}
+            <li><a href="{% url 'plants_by_category' category.id %}">{{ category.name }}</a></li>
+        {% empty %}
+            <li>No categories available.</li>
+        {% endfor %}
+    </ul>
+</div>
+
+<section class="plant-list">
+    {% for plant in plants %}
+        <div class="plant-card">
+            <h3>{{ plant.name }}</h3>
+            <p>Type of plant: {{ plant.type_of_plant }}</p>
+            <p>Where it lives: {{ plant.habitat }}</p>
+            <p>How does it look: {{ plant.image }}</p>
+        </div>
+    {% empty %}
+        <p>No plants found.</p>
+    {% endfor %}
+</section>
+{% endblock %}
