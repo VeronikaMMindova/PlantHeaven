@@ -1,0 +1,79 @@
+h1 {
+    text-align: center;
+    margin-top: 20px;
+    color: #cedea6;
+    font-size: xxx-large;
+    font-family: "Dancing Script", cursive;
+}
+
+form {
+    background: linear-gradient(#303d30, 20%, #aad294);
+    padding: 1.5rem;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 500px;
+    margin: 5rem auto;
+}
+
+.form-group {
+    margin-bottom: 15px;
+}
+
+.form-group label {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 5px;
+    color: #303d30;
+    font-size: 18px;
+}
+
+.form-group input,
+.form-group select,
+.form-group textarea {
+    width: 100%;
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background: #f8f8f8;
+    transition: border-color 0.3s ease;
+}
+
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus {
+    border-color: #303d30;
+    outline: none;
+    background: #fff;
+}
+
+.btn {
+    display: inline-block;
+    padding: 10px 20px;
+    font-size: 16px;
+    font-weight: bold;
+    color: #cedea6;
+    background: #303d30;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    text-align: center;
+    text-decoration: none;
+    transition: background-color 0.3s ease;
+}
+
+.btn:hover {
+    background: #66bb6a;
+}
+
+@media (max-width: 768px) {
+    form {
+        padding: 15px;
+    }
+
+    .btn {
+        width: 100%;
+        padding: 15px;
+    }
+}

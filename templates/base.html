@@ -25,6 +25,7 @@
             <li><a href="{% url 'about_us' %}">About Us</a></li>
             <li><a href="{% url 'search_plants' %}">Search Plant</a></li>
             <li><a href="{% url 'our_blog' %}">Blog</a></li>
+
             {% if user.is_authenticated %}
 
             <li><a href="{% url 'logout' %}">Logout</a></li>
