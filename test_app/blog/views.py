@@ -212,6 +212,10 @@ def search_plants(request):
     }
     return render(request, 'blog/search_plants.html', context)
 
+# def found_plant(request, category_id):
+#     category = get_object_or_404(Category, id=category_id)
+#     plants = Plant.objects.filter(category=category)
+#     return render(request, 'blog/plant_list.html', {'plants': plants, 'category': category})
 
 # @login_required
 # def confirm_delete_post(request,pk):

@@ -2,7 +2,7 @@ from django.urls import path
 
 
 from test_app.blog.views import PostDetailView, AddPostView, DeletePostView, UpdatePostView, \
-    AddCategoryView,  about_us_view, our_blog_view, like_post, search_plants, add_comment, \
+    AddCategoryView, about_us_view, our_blog_view, like_post, search_plants, add_comment, \
     plant_list
 from test_app.common.views import plants_by_category
 
@@ -11,6 +11,7 @@ urlpatterns = [
     path('our_blog/', our_blog_view, name='our_blog'),
     path('about_us/', about_us_view, name='about_us'),
     path('search_plants/', search_plants, name='search_plants'),
+
     path('plants/', plant_list, name='plants'),
     path('plants/category/<str:category_name>/', plants_by_category, name='category_plants'),
     path('post/details/<int:pk>/', PostDetailView.as_view(), name='post_details'),

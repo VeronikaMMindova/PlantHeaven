@@ -14,7 +14,7 @@
         {% if plants %}
             <ul>
                 {% for plant in plants %}
-                    <li>{{ plant.name }} ({{ plant.type_of_plant }}) - {{ plant.habitat }}</li>
+                    <li><a href="{% url 'category_plants' category_name=plant.category.name %}"> {{ plant.name }}</a> ({{ plant.category }}) - {{ plant.habitat }}</li>
                 {% endfor %}
             </ul>
         {% else %}
