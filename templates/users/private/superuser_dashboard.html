@@ -1,0 +1,80 @@
+{% extends 'base.html' %}
+{% block title %}Admin Dashboard{% endblock %}
+{% block content %}
+<h1>Admin Dashboard</h1>
+
+<section class="model-actions">
+    <h2>Model Overview</h2>
+    <ul>
+        <li><strong>Profiles:</strong> {{ profiles_count }} 
+            <a href="{% url 'profile_list' %}">View All</a> | 
+            <a href="{% url 'profile_edit' pk=0 %}">Add New</a>
+        </li>
+        <li><strong>Posts:</strong> {{ posts_count }}
+            <a href="{% url 'post_list' %}">View All</a> | 
+            <a href="{% url 'post_edit' pk=0 %}">Add New</a>
+        </li>
+        <li><strong>Comments:</strong> {{ comments_count }}
+            <a href="{% url 'comment_list' %}">View All</a> | 
+            <a href="{% url 'comment_edit' pk=0 %}">Add New</a>
+        </li>
+        <li><strong>Plants:</strong> {{ plants_count }}
+            <a href="{% url 'plant_list' %}">View All</a> | 
+            <a href="{% url 'plant_edit' pk=0 %}">Add New</a>
+        </li>
+        <li><strong>Categories:</strong> {{ categories_count }}
+            <a href="{% url 'category_list' %}">View All</a> | 
+            <a href="{% url 'category_edit' pk=0 %}">Add New</a>
+        </li>
+    </ul>
+</section>
+
+<section class="recent-activity">
+    <h2>Deleted Posts</h2>
+    {% if deleted_posts %}
+        <ul>
+            {% for post in deleted_posts %}
+                <li>{{ post.title }} - Deleted by {{ post.author }} on {{ post.updated_at|date:"Y-m-d H:i" }}</li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>No deleted posts found.</p>
+    {% endif %}
+
+    <h2>Active Users (Last 30 Days)</h2>
+    {% if active_users %}
+        <ul>
+            {% for user in active_users %}
+                <li>{{ user.username }} - Last login: {{ user.last_login|date:"Y-m-d H:i" }}</li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>No active users found.</p>
+    {% endif %}
+
+    <h2>Latest Comments</h2>
+    {% if latest_comments %}
+        <ul>
+            {% for comment in latest_comments %}
+                <li>
+                    <strong>{{ comment.author }}</strong> on <em>{{ comment.post.title }}</em>: {{ comment.body }}
+                    <small>{{ comment.created_at|date:"Y-m-d H:i" }}</small>
+                </li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>No recent comments found.</p>
+    {% endif %}
+
+    <h2>Top Liked Posts</h2>
+    {% if posts_with_likes %}
+        <ul>
+            {% for post in posts_with_likes %}
+                <li>{{ post.title }} by {{ post.author }} - {{ post.num_likes }} likes</li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>No liked posts found.</p>
+    {% endif %}
+</section>
+{% endblock %}

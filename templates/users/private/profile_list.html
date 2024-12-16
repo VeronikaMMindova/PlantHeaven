@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+{% block title %}Profiles{% endblock %}
+{% block content %}
+<h1>Profiles</h1>
+<a href="{% url 'profile_edit' pk=0 %}">Create New Profile</a>
+<table>
+    <tr>
+        <th>User</th>
+        <th>Actions</th>
+    </tr>
+    {% for profile in profiles %}
+    <tr>
+        <td>{{ profile.user }}</td>
+        <td>
+            <a href="{% url 'profile_edit' pk=profile.pk %}">Edit</a> |
+            <a href="{% url 'profile_delete' pk=profile.pk %}">Delete</a>
+        </td>
+    </tr>
+    {% endfor %}
+</table>
+{% endblock %}

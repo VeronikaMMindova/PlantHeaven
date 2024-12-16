@@ -7,40 +7,6 @@ from test_app.users.models import Profile
 from test_app.users.validators import clean_password_confirm
 
 
-# class SignUpForm(UserCreationForm):
-#     first_name = forms.CharField(
-#         max_length=50,
-#         required=True,
-#         widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'First Name'})
-#     )
-#     last_name = forms.CharField(
-#         max_length=50,
-#         required=True,
-#         widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Last Name'})
-#     )
-#
-#     class Meta:
-#         model = User
-#         fields = ('username', 'first_name', 'last_name', 'password1', 'password2')
-    # first_name = forms.CharField(
-    #     max_length=50,
-    #     required=True,
-    #     widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'First Name'})
-    # )
-    # last_name = forms.CharField(
-    #     max_length=50,
-    #     required=True,
-    #     widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Last Name'})
-    # )
-    # class Meta:
-    #     model = User
-    #     fields = ('username', 'first_name', 'last_name', 'password1', 'password2')
-    # def __init__(self, *args, **kwargs):
-    #     super(SignUpForm, self).__init__(*args, **kwargs)
-    #     self.fields['username'].widget.attrs['class'] = 'form-control'
-    #     self.fields['password1'].widget.attrs['class'] = 'form-control'
-    #     self.fields['password2'].widget.attrs['class'] = 'form-control'
-
 class EditProfileForm(UserChangeForm):
     username = forms.CharField(
         max_length=50,
@@ -176,7 +142,10 @@ class UserRegistrationForm(forms.ModelForm):
 #             if User.objects.filter(username=username).exists():
 #                 raise ValidationError("Username is already taken. Please choose a different one.")
 #             return username
-
+class ProfileForm(forms.ModelForm):
+    class Meta:
+        model = Profile
+        fields = '__all__'
 class ChangePasswordForm(PasswordChangeForm):
     old_password = forms.CharField(widget=forms.PasswordInput(attrs={'class': 'form-control','type': 'password'}))
     new_password1 = forms.CharField(widget=forms.PasswordInput(attrs={'class': 'form-control','type': 'password'}))

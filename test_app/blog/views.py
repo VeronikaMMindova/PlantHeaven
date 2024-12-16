@@ -9,19 +9,9 @@ from django.views.generic import DetailView, CreateView, UpdateView
 
 from test_app.blog.models import Post, Category, Plant, Comment
 from test_app.blog.forms import PostForm, EditForm, CommentForm, CategoryForm, PlantForm
+from test_app.users.forms import ProfileForm
+from test_app.users.models import Profile
 
-
-# class HomeView(ListView):
-#     model = Post
-#     template_name = '../templates/home/home.html'
-#     categories_types = Category.objects.all()
-#     ordering = ['-created_at']
-#
-#     def get_context_data(self, *args,**kwargs):
-#         category_menu = Category.objects.all()
-#         context = super(HomeView, self).get_context_data(*args,**kwargs)
-#         context['category_menu'] = category_menu
-#         return context
 
 class PostDetailView(DetailView):
     model = Post
@@ -33,17 +23,17 @@ class PostDetailView(DetailView):
         post = self.object
         user = self.request.user
 
-        # Check if the user is authenticated and has a profile
+
         if user.is_authenticated and hasattr(user, 'profile'):
             profile = user.profile
             context['liked'] = post.likes.filter(id=profile.id).exists()
         else:
             context['liked'] = False
 
-        # Add total likes to the context
+
         context['total_likes'] = post.total_likes()
 
-        # Add the comments to the context
+
         context['comments'] = post.comments.all()
 
         return context
@@ -51,17 +41,16 @@ class PostDetailView(DetailView):
     def post(self, request, *args, **kwargs):
         post = self.get_object()
 
-        # Handle comment submission
+
         if request.method == 'POST' and request.user.is_authenticated:
             comment_text = request.POST.get('comment_text')
             if comment_text:
-                # Create the comment and link it to the post
                 Comment.objects.create(
                     post=post,
-                    user=request.user.profile,  # Link to the user's profile
-                    content=comment_text  # Save the comment text in the content field
+                    user=request.user.profile,
+                    content=comment_text
                 )
-            # After posting a comment, redirect to the same post detail page
+
             return redirect('post_details', pk=post.pk)
         return super().post(request, *args, **kwargs)
 class AddPostView(CreateView):
@@ -76,14 +65,14 @@ class AddPostView(CreateView):
 
 class UpdatePostView(UpdateView):
     model = Post
-    form_class = PostForm  # Use the form you created for editing posts
+    form_class = PostForm
     template_name = 'blog/update_post.html'
     context_object_name = 'post'
 
     def get_object(self):
         post = get_object_or_404(Post, pk=self.kwargs['pk'])
         if post.author.user != self.request.user:
-            raise PermissionDenied  # or redirect to some error page
+            raise PermissionDenied
         return post
 
     def form_valid(self, form):
@@ -115,7 +104,6 @@ class DeletePostView(View):
         elif confirm == 'no':
             return redirect('post_details', pk=post.pk)
         else:
-            # Handle unexpected cases or errors
             return render(request, 'blog/confirm_delete_post.html', {
                 'post': post,
                 'error': "Invalid choice. Please confirm your action.",
@@ -139,48 +127,6 @@ class AddCategoryView(LoginRequiredMixin, UserPassesTestMixin, CreateView):
 
 
 # function-based view
-# def category_view(request, categories_types):
-#     formatted_category = categories_types.replace('-', ' ').title()
-#     category_post = Post.objects.filter(category__iexact=formatted_category)
-#
-#     # Debugging statement
-#     # print(f"Formatted Category: {formatted_category}, Post Count: {category_post.count()}")
-#
-#
-#
-#     context = {
-#         'categories_types': formatted_category,
-#         'category_post': category_post,
-#     }
-#
-#
-#     return render(request, 'search_plants.html', context)
-#
-    # category_post = Post.objects.filter(category=categories_types.replace('-', ' '))
-    # context = {'categories_types': categories_types.replace('-', ' '),'category_post': category_post}
-    # return render(request, 'search_plants.html', context)
-#
-# def CategoryListView(request):
-#     category_menu_list = Category.objects.all()
-#     context = {'category_menu_list': category_menu_list}
-#     return render(request, 'category_list.html', context)
-
-# def LikeView(request, pk):
-#     post = get_object_or_404(Post, id=request.POST.get('post_id'))
-#     is_liked = False
-#
-#     # unlike
-#     if post.likes.filter(id=request.user.id).exists():
-#         post.likes.remove(request.user)
-#         is_liked = False
-#
-#     # like
-#     else:
-#         post.likes.add(request.user)
-#         is_liked = True
-#
-#
-#     return HttpResponseRedirect(reverse('post_details', args=[str(pk)]))
 @login_required
 def like_post(request, post_id):
     post = get_object_or_404(Post, id=post_id)
@@ -212,31 +158,6 @@ def search_plants(request):
     }
     return render(request, 'blog/search_plants.html', context)
 
-# def found_plant(request, category_id):
-#     category = get_object_or_404(Category, id=category_id)
-#     plants = Plant.objects.filter(category=category)
-#     return render(request, 'blog/plant_list.html', {'plants': plants, 'category': category})
-
-# @login_required
-# def confirm_delete_post(request,pk):
-#     # Get the post to be deleted
-#     post = get_object_or_404(Post, pk=pk)
-#
-#     # Ensure the logged-in user is the author of the post
-#     if request.user != post.author.user:
-#         raise Http404("You are not authorized to delete this post.")
-#
-#     # If the form is submitted via POST, perform soft delete
-#     if request.method == "POST":
-#         # Mark the post as deleted (soft delete)
-#         post.is_deleted = True
-#         post.save()
-#
-#         # Redirect to the home page after marking the post as deleted
-#         return redirect('home')
-#
-#     return render(request, 'blog/confirm_delete_post.html', {'post': post})
-
 
 @login_required
 def add_comment(request, post_id):
@@ -260,7 +181,7 @@ def plant_list(request):
     plants = Plant.objects.all()
     return render(request, 'blog/plants.html', {'plants': plants})
 
-
+# private part
 @login_required
 def add_plant(request):
     if not request.user.is_staff:
@@ -282,7 +203,7 @@ def delete_plant(request, pk):
     plant = get_object_or_404(Plant, pk=pk)
 
     if request.method == "POST":
-        plant.delete()  # Delete the plant
-        return redirect('home')  # Redirect to the home page after deletion
+        plant.delete()
+        return redirect('home')
 
     return render(request, 'users/private/delete_plant.html', {'plant': plant})

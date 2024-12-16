@@ -26,6 +26,7 @@
                 {% endif %}
             {% if user.is_staff %}
                     <a href="{% url 'delete_plant' plant.pk %}" class="delete-plant">Delete</a>
+
             {% endif %}
             </div>
         {% empty %}
