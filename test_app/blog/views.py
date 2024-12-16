@@ -1,14 +1,14 @@
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.core.exceptions import PermissionDenied
-from django.http import Http404
+from django.http import Http404, HttpResponseForbidden
 from django.shortcuts import render, get_object_or_404, redirect
 from django.urls import reverse_lazy
 from django.views import View
 from django.views.generic import DetailView, CreateView, UpdateView
 
 from test_app.blog.models import Post, Category, Plant, Comment
-from test_app.blog.forms import PostForm, EditForm, CommentForm, CategoryForm
+from test_app.blog.forms import PostForm, EditForm, CommentForm, CategoryForm, PlantForm
 
 
 # class HomeView(ListView):
@@ -259,3 +259,30 @@ def add_comment(request, post_id):
 def plant_list(request):
     plants = Plant.objects.all()
     return render(request, 'blog/plants.html', {'plants': plants})
+
+
+@login_required
+def add_plant(request):
+    if not request.user.is_staff:
+        return HttpResponseForbidden("You do not have permission to add plants.")
+
+    if request.method == 'POST':
+        form = PlantForm(request.POST, request.FILES)
+        if form.is_valid():
+            form.save()
+            return redirect('category_plants')
+    else:
+        form = PlantForm()
+
+    return render(request, 'users/private/add_plant.html', {'form': form})
+
+
+@login_required
+def delete_plant(request, pk):
+    plant = get_object_or_404(Plant, pk=pk)
+
+    if request.method == "POST":
+        plant.delete()  # Delete the plant
+        return redirect('home')  # Redirect to the home page after deletion
+
+    return render(request, 'users/private/delete_plant.html', {'plant': plant})

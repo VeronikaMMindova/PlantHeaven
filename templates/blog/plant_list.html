@@ -9,22 +9,7 @@
             <h3>Plants in {{ category_name }} Category</h3>
         </div>
 
-{#        <section class="plant-list">#}
-{#            {% for plant in plants %}#}
-{#                <div class="plant-card">#}
-{#                    <h3>{{ plant.name }}</h3>#}
-{#                    <p><strong>Type of plant:</strong> {{ plant.type_of_plant }}</p>#}
-{#                    <p><strong>Where it lives:</strong> {{ plant.habitat }}</p>#}
-{#                    {% if plant.image %}#}
-{#                        <img src="{{ plant.image.url }}" alt="{{ plant.name }}">#}
-{#                    {% else %}#}
-{#                        <img src="#" alt="No image available">#}
-{#                    {% endif %}#}
-{#                </div>#}
-{#            {% empty %}#}
-{#                <p>No plants found.</p>#}
-{#            {% endfor %}#}
-{#        </section>#}
+
   <section class="plant-list">
         {% for plant in plants %}
             <div class="plant-card">
@@ -39,6 +24,9 @@
                 {% if plant.wikipedia_url %}
                     <a href="{{ plant.wikipedia_url }}" target="_blank" class="wikipedia-link">Wikipedia</a>
                 {% endif %}
+            {% if user.is_staff %}
+                    <a href="{% url 'delete_plant' plant.pk %}" class="delete-plant">Delete</a>
+            {% endif %}
             </div>
         {% empty %}
             <p>No plants found.</p>
@@ -46,16 +34,4 @@
     </section>
     </div>
 
-{#<section class="plant-list">#}
-{#    {% for plant in plants %}#}
-{#        <div class="plant-card">#}
-{#            <h3>{{ plant.name }}</h3>#}
-{#            <p>Type of plant: {{ plant.type_of_plant }}</p>#}
-{#            <p>Where it lives: {{ plant.habitat }}</p>#}
-{#            <p>How does it look: {{ plant.image }}</p>#}
-{#        </div>#}
-{#    {% empty %}#}
-{#        <p>No plants found in this category.</p>#}
-{#    {% endfor %}#}
-{#</section>#}
 {% endblock %}

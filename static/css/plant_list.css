@@ -101,12 +101,36 @@
 
 .plant-list p {
     width: 100%;
-    text-align: center; /* Center-align text if there are no plants */
+    text-align: center;
+}
+.delete-plant {
+    display: inline-block;
+    padding: 10px 20px;
+    font-size: 1rem;
+    font-weight: bold;
+    color: #fcf6f3;
+    background-color: #e74c3c;
+    border-radius: 5px;
+    text-align: center;
+    text-decoration: none;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    margin-top: 10px;
+}
+
+.delete-plant:hover {
+    background-color: #c0392b;
+    transform: scale(1.05);
+}
+
+.delete-plant:focus {
+    outline: 2px solid #d35400;
+    outline-offset: 2px;
 }
 
 @media (max-width: 768px) {
     .plant-card {
-        width: calc(50% - 15px); /* Two columns on medium screens */
+        width: calc(50% - 15px);
     }
 }
 

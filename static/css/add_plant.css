@@ -2,17 +2,28 @@
     max-width: 600px;
     margin: 2rem auto;
     padding: 2rem;
-    background-color: #f9f9f9;
+    background-color: #fcf6f3;
     border-radius: 8px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
+
 h1 {
+    font-family: 'Arial', sans-serif;
     text-align: center;
     margin-bottom: 2rem;
     font-size: 2rem;
-    color: #cedea6;
-    font-family: 'Dancing Script', cursive;
+    color: #303d30;
+    border-bottom: 2px solid #6fc76f;
+}
+
+form {
+    width: 100%;
+    max-width: 500px;
+    margin: 12px;
 }
 
 
@@ -20,14 +31,7 @@ h1 {
     display: flex;
     flex-direction: column;
     gap: 1.5rem;
-    align-items: center;
-}
-
-
-form {
-    width: 100%;
-    max-width: 400px;
-    margin: 12px;
+    align-items: stretch;
 }
 
 form label {
@@ -54,7 +58,9 @@ form select:focus {
     border-color: #2b7a4b;
 }
 
-button {
+/* Button Styling */
+button,
+a.button {
     padding: 0.75rem 1.5rem;
     font-size: 1rem;
     color: #fff;
@@ -63,43 +69,37 @@ button {
     border-radius: 5px;
     cursor: pointer;
     transition: background-color 0.3s;
-    display: block;
-    margin: 10px 0 0 105px;
+    display: inline-block;
+    margin: 10px;
+    text-decoration: none;
+    text-align: center;
 }
 
-button:hover {
+button:hover,
+a.button:hover {
     background-color: #1d5f37;
 }
 
-button:focus {
+button:focus,
+a.button:focus {
     outline: none;
 }
 
-a.button {
-    display: inline-block;
-    text-align: center;
-    margin-top: 1rem;
-    padding: 0.75rem 1.5rem;
-    font-size: 1rem;
-    font-weight: bold;
-    color: #cedea6;
-    background-color: #303d30;
-    border-radius: 5px;
-    text-decoration: none;
-    transition: background-color 0.3s, color 0.3s;
+/* Button Group for Horizontal Alignment */
+.button-group {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+    margin-top: 20px;
 }
 
-a.button:hover {
-    background-color: #232a23;
-    color: #c3e866;
-    text-decoration: none;
-}
-
+/* Additional Focus Effect for Link Button */
 a.button:focus {
     outline: 2px solid #1d571e;
     outline-offset: 2px;
 }
 
+/* Heading for Error/Success Messages */
 h2 {
     text-align: center;
     color: #ff6f61;

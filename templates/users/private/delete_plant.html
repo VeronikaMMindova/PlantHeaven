@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block extra_css %}<link rel="stylesheet" href="{% static 'css/delete_plant.css' %}">{% endblock %}
+{% block title %}Delete Plant{% endblock %}
+{% block content %}
+    <div class="container">
+        <h1>Are you sure you want to delete "{{ plant.name }}"?</h1>
+        
+        <p>This action cannot be undone.</p>
+
+        <form method="POST">
+            {% csrf_token %}
+            <button type="submit" class="btn btn-danger">Yes, Delete</button>
+        </form>
+        
+        <a href="{% url 'home' %}" class="btn btn-secondary">Cancel</a>
+    </div>
+{% endblock %}

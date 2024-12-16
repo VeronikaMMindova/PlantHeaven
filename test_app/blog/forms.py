@@ -1,5 +1,5 @@
 from django import forms
-from .models import Post, Category, Comment
+from .models import Post, Category, Comment, Plant
 
 choices = Category.objects.all().values_list('name', 'name')
 choice_list = []
@@ -51,3 +51,18 @@ class CategoryForm(forms.ModelForm):
         widgets = {
             'name': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Category Name'}),
         }
+
+
+class PlantForm(forms.ModelForm):
+    class Meta:
+        model = Plant
+        fields = ['name', 'habitat', 'image', 'wikipedia_url', 'category', 'type_of_plant']
+
+    widgets = {
+        'name': forms.TextInput(attrs={'placeholder': 'Plant Name'}),
+        'habitat': forms.TextInput(attrs={'placeholder': 'Habitat'}),
+        'wikipedia_url': forms.URLInput(attrs={'placeholder': 'Wikipedia URL (optional)'}),
+        'type_of_plant': forms.Select(),
+        'category': forms.Select(),
+        'image': forms.ClearableFileInput(attrs={'accept': 'image/*'}),
+    }

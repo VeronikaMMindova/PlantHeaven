@@ -1,0 +1,85 @@
+.container {
+    max-width: 600px;
+    margin: 2rem auto;
+    padding: 2rem;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    text-align: center; /* Center text and buttons */
+}
+
+h1 {
+    font-size: 1.8rem;
+    color: #e74c3c; /* Red color for danger message */
+    margin-bottom: 1.5rem;
+    font-family: 'Dancing Script', cursive;
+}
+
+p {
+    font-size: 1rem;
+    color: #333;
+    margin-bottom: 2rem;
+}
+
+/* Button styles */
+.btn {
+    display: inline-block;
+    padding: 10px 20px;
+    font-size: 1rem;
+    font-weight: bold;
+    text-align: center;
+    border-radius: 5px;
+    text-decoration: none;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    margin: 0.5rem;
+}
+
+/* Danger button (Yes, Delete) */
+.btn-danger {
+    background-color: #e74c3c; /* Red color for delete action */
+    color: white;
+    border: none;
+}
+
+.btn-danger:hover {
+    background-color: #c0392b; /* Darker red on hover */
+    transform: scale(1.05); /* Slightly enlarge the button */
+}
+
+.btn-danger:focus {
+    outline: 2px solid #d35400; /* Orange outline on focus */
+    outline-offset: 2px;
+}
+
+/* Secondary button (Cancel) */
+.btn-secondary {
+    background-color: #bdc3c7; /* Gray color for cancel */
+    color: white;
+    border: none;
+}
+
+.btn-secondary:hover {
+    background-color: #95a5a6; /* Darker gray on hover */
+    transform: scale(1.05);
+}
+
+.btn-secondary:focus {
+    outline: 2px solid #7f8c8d;
+    outline-offset: 2px;
+}
+
+/* Optional: Responsive design for small screens */
+@media (max-width: 480px) {
+    .container {
+        padding: 1.5rem;
+    }
+
+    h1 {
+        font-size: 1.5rem;
+    }
+
+    .btn {
+        padding: 8px 16px;
+    }
+}
