@@ -1,23 +1,11 @@
 {% extends 'base.html' %}
 
-{% block title %}Manage Plants{% endblock %}
+{% block title %}All Plants{% endblock %}
 
 {% block content %}
-<h1>Manage Plants</h1>
+<h1>All Plants</h1>
 
-<form method="get" class="mb-3">
-    <label for="category-filter">Filter by Category:</label>
-    <select name="category" id="category-filter" class="form-select" onchange="this.form.submit()">
-        <option value="">All Categories</option>
-        {% for category in categories %}
-        <option value="{{ category.id }}" {% if category.id|stringformat:"d" == selected_category %}selected{% endif %}>
-            {{ category.name }}
-        </option>
-        {% endfor %}
-    </select>
-</form>
-
-<a href="{% url 'admin_plant_edit' pk=0 %}" class="btn btn-success">Add New Plant</a>
+<a href="{% url 'plant_edit' pk=0 %}" class="btn btn-success">Add New Plant</a>
 
 <table class="table mt-3">
     <thead>
@@ -35,15 +23,15 @@
             <td>{{ plant.id }}</td>
             <td>{{ plant.name }}</td>
             <td>{{ plant.type_of_plant }}</td>
-            <td>{{ plant.category }}</td>
+            <td>{{ plant.category.name }}</td> <!-- Display the category name -->
             <td>
-                <a href="{% url 'admin_plant_edit' plant.id %}" class="btn btn-warning btn-sm">Edit</a>
-                <a href="{% url 'admin_plant_delete' plant.id %}" class="btn btn-danger btn-sm">Delete</a>
+                <a href="{% url 'plant_edit' pk=plant.id %}" class="btn btn-warning btn-sm">Edit Plant</a>
+                <a href="{% url 'plant_delete' pk=plant.id %}" class="btn btn-danger btn-sm">Delete Plant</a>
             </td>
         </tr>
         {% empty %}
         <tr>
-            <td colspan="5">No plants found for this category.</td>
+            <td colspan="5">No plants available.</td>
         </tr>
         {% endfor %}
     </tbody>

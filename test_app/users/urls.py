@@ -4,7 +4,7 @@ from test_app.blog.views import plant_list
 from test_app.users.views import UserLoginView, UserRegistrationView, UserUpdateView, ChangePasswordView, \
     password_success, logout_view, admin_dashboard, profile_details, superuser_dashboard, profile_list, profile_edit, \
     profile_delete, post_list, post_edit, post_delete, comment_list, comment_create, comment_edit, comment_delete, \
-    plant_delete, plant_edit, categories_list, category_edit, category_delete
+    plant_delete, plant_edit, category_edit, category_delete, plants_list, category_list
 
 urlpatterns = [
     # private part
@@ -27,12 +27,12 @@ urlpatterns = [
     path('admin/comments/delete/<int:pk>/', comment_delete, name='comment_delete'),
 
     #admin's crud on plants model
-    path('admin/plants/', plant_list, name='plants_list'),
+    path('admin/plants/', plants_list, name='plants_list'),
     path('admin/plants/edit/<int:pk>/', plant_edit, name='plant_edit'),
     path('admin/plants/delete/<int:pk>/', plant_delete, name='plant_delete'),
 
     #admin's crud on categories model
-    path('admin/categories/', categories_list, name='categories_list'),
+    path('admin/categories/', category_list, name='category_list'),
     path('admin/categories/edit/<int:pk>/', category_edit, name='category_edit'),
     path('admin/categories/delete/<int:pk>/', category_delete, name='category_delete'),
 

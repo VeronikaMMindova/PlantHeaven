@@ -201,19 +201,9 @@ def comment_delete(request, pk):
 #admin's crud - Plant model
 #todo: make the filter by categories
 @user_passes_test(admin_check)
-def plant_list(request):
-    category_id = request.GET.get('category', None)  # Get the category ID from query parameters
-    if category_id:
-        plants = Plant.objects.filter(category__id=category_id)  # Filter plants by category
-    else:
-        plants = Plant.objects.all()  # Default to all plants
-
-    categories = Category.objects.all()  # Fetch all categories for filtering
-    return render(request, 'users/private/plants_list.html', {
-        'plants': plants,
-        'categories': categories,
-        'selected_category': category_id,  # Keep track of selected category
-    })
+def plants_list(request):
+    plants = Plant.objects.all()
+    return render(request, 'users/private/plants_list.html', {'plants': plants})
 
 @user_passes_test(admin_check)
 def plant_edit(request, pk):
@@ -228,7 +218,7 @@ def plant_edit(request, pk):
         if form.is_valid():
             form.save()
             messages.success(request, f"Plant {'created' if pk == 0 else 'updated'} successfully!")
-            return redirect('admin_plant_list')
+            return redirect('plants_list')
         else:
             messages.error(request, "Please correct the errors below.")
 
@@ -240,13 +230,13 @@ def plant_delete(request, pk):
     if request.method == 'POST':
         plant.delete()
         messages.success(request, "Plant deleted successfully!")
-        return redirect('admin_plant_list')
+        return redirect('plants_list')
 
     return render(request, 'users/private/delete_plant.html', {'plant': plant})
 
 #admin's crud - Category model
 @user_passes_test(admin_check)
-def categories_list(request):
+def category_list(request):
     categories = Category.objects.all()
     return render(request, 'users/private/category_list.html', {'categories': categories})
 @user_passes_test(admin_check)
@@ -255,14 +245,20 @@ def category_edit(request, pk):
     if request.method == 'POST':
         category.name = request.POST['name']
         category.save()
-        return redirect('categories_list')
+        return redirect('category_list')
     return render(request, 'users/private/category_edit.html', {'category': category})
 
 @user_passes_test(admin_check)
 def category_delete(request, pk):
     category = get_object_or_404(Category, pk=pk)
-    category.delete()
-    return redirect('categories_list')
+
+    if request.method == 'POST':
+        category.delete()
+        messages.success(request, "Category deleted successfully.")
+        return redirect('category_list')
+
+    context = {'category': category}
+    return render(request, 'users/private/category_delete.html', context)
 
 
 @user_passes_test(staff_check)
