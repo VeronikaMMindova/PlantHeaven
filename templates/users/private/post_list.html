@@ -1,10 +1,39 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+{% extends 'base.html' %}
 
-</body>
-</html>
+{% block title %}Post List{% endblock %}
+
+{% block content %}
+<h1>Post List</h1>
+
+<a href="{% url 'post_edit' pk=0 %}" class="btn btn-success">Create New Post</a>
+
+<table class="table mt-3">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Title</th>
+            <th>Author</th>
+            <th>Created At</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for post in posts %}
+            <tr>
+                <td>{{ post.id }}</td>
+                <td>{{ post.title }}</td>
+                <td>{{ post.author }}</td>
+                <td>{{ post.created_at|date:"Y-m-d H:i" }}</td>
+                <td>
+                    <a href="{% url 'post_edit' post.id %}" class="btn btn-warning btn-sm">Edit</a>
+                    <a href="{% url 'post_delete_by_admin' post.id %}" class="btn btn-danger btn-sm">Delete</a>
+                </td>
+            </tr>
+        {% empty %}
+            <tr>
+                <td colspan="5">No posts found.</td>
+            </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

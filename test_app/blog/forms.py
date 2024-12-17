@@ -1,5 +1,8 @@
 from django import forms
+from django.contrib.auth.models import User
+
 from .models import Post, Category, Comment, Plant
+from ..users.models import Profile
 
 choices = Category.objects.all().values_list('name', 'name')
 choice_list = []
@@ -9,7 +12,7 @@ for choice in choices:
 class PostForm(forms.ModelForm):
     class Meta:
         model = Post
-        fields = ('title', 'image', 'category', 'description', 'snippet')
+        fields = ('title', 'image', 'category', 'description', 'snippet', 'author')
         widgets = {
             'title': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Enter post title'}),
             'image': forms.ClearableFileInput(attrs={'class': 'form-control'}),
@@ -24,6 +27,9 @@ class PostForm(forms.ModelForm):
             }),
         }
 
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['author'].queryset = Profile.objects.filter(is_superuser=True)
 class EditForm(forms.ModelForm):
     class Meta:
         model = Post

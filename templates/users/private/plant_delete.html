@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+
+{% block title %}Delete Plant{% endblock %}
+
+{% block content %}
+<h1>Delete Plant</h1>
+<p>Are you sure you want to delete the plant "{{ plant.name }}"?</p>
+
+<form method="post">
+    {% csrf_token %}
+    <button type="submit" class="btn btn-danger">Delete</button>
+    <a href="{% url 'admin_plant_list' %}" class="btn btn-secondary">Cancel</a>
+</form>
+{% endblock %}

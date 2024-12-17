@@ -1,10 +1,11 @@
 from django import forms
+from django.contrib.auth import authenticate
 from django.contrib.auth.forms import  UserChangeForm, PasswordChangeForm
 from django.contrib.auth.models import User
 from django.core.exceptions import ValidationError
 
 from test_app.users.models import Profile
-from test_app.users.validators import clean_password_confirm
+from test_app.users.validators import clean_password_confirm, custom_password_validator
 
 
 class EditProfileForm(UserChangeForm):
@@ -60,7 +61,7 @@ class EditProfileForm(UserChangeForm):
             self.fields['is_active'].widget = forms.HiddenInput()
 
 class UserRegistrationForm(forms.ModelForm):
-    password = forms.CharField(widget=forms.PasswordInput, required=True, label="Password")
+    password = forms.CharField(widget=forms.PasswordInput, required=True, help_text="Password must include uppercase, lowercase, a number, and a special character.",  label="Password")
     confirm_password = forms.CharField(widget=forms.PasswordInput, required=True, label="Confirm Password")
 
     class Meta:
@@ -75,6 +76,11 @@ class UserRegistrationForm(forms.ModelForm):
         if password and confirm_password and password != confirm_password:
             raise forms.ValidationError("Passwords do not match.")
         return cleaned_data
+
+    def clean_password(self):
+        password = self.cleaned_data.get('password')
+        custom_password_validator(password)
+        return password
 
 
 # class ProfileForm(forms.ModelForm):
@@ -146,6 +152,27 @@ class ProfileForm(forms.ModelForm):
     class Meta:
         model = Profile
         fields = '__all__'
+
+class UserLoginForm(forms.Form):
+    username = forms.CharField(max_length=150, label="Username", widget=forms.TextInput(attrs={
+        'class': 'form-control',
+        'placeholder': 'Enter your username',
+    }))
+    password = forms.CharField(label="Password", widget=forms.PasswordInput(attrs={
+        'class': 'form-control',
+        'placeholder': 'Enter your password',
+    }))
+
+    def clean(self):
+        cleaned_data = super().clean()
+        username = cleaned_data.get('username')
+        password = cleaned_data.get('password')
+
+        if username and password:
+            user = authenticate(username=username, password=password)
+            if not user:
+                raise forms.ValidationError("Invalid username or password.")
+        return cleaned_data
 class ChangePasswordForm(PasswordChangeForm):
     old_password = forms.CharField(widget=forms.PasswordInput(attrs={'class': 'form-control','type': 'password'}))
     new_password1 = forms.CharField(widget=forms.PasswordInput(attrs={'class': 'form-control','type': 'password'}))

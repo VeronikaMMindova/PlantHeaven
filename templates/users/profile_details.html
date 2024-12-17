@@ -24,7 +24,10 @@
     </div>
 
     <div class="profile-details">
-        <p><strong>First Name:</strong> {{ profile.first_name|default:"Not provided" }}</p>
+{#    TODO:why not displaying the admins first name last name etc#}
+        {% csrf_token %}
+        {{ form.as_p}}
+        <p><strong>First Name:</strong> {{ profile.first_name|default:"Not provided"  }}</p>
         <p><strong>Last Name:</strong> {{ profile.last_name|default:"Not provided" }}</p>
         <p><strong>Bio:</strong> {{ profile.bio|default:"No bio added yet." }}</p>
         <p>

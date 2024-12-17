@@ -12,76 +12,58 @@ from django.shortcuts import render, get_object_or_404, redirect
 from django.urls import reverse_lazy
 from django.utils import timezone
 from django.utils.timezone import now
-from django.views.generic import CreateView, UpdateView, DetailView
+from django.views.generic import CreateView, UpdateView, DetailView, FormView
 
-from test_app.blog.forms import PostForm
+from test_app.blog.forms import PostForm, CommentForm, PlantForm
 from test_app.blog.models import Post, Comment, Plant, Category
-from test_app.users.forms import EditProfileForm, ChangePasswordForm, UserRegistrationForm, ProfileForm
+from test_app.users.forms import EditProfileForm, ChangePasswordForm, UserRegistrationForm, ProfileForm, UserLoginForm
 from test_app.users.models import Profile
 from test_app.users.validators import staff_check, admin_check
 
-
-# Create your views here.
 class UserRegistrationView(CreateView):
     template_name = 'users/register.html'
     form_class = UserRegistrationForm
-    success_url = reverse_lazy('login')
-    #
-    # def form_valid(self, form):
-    #     # Save the user instance but do not commit yet
-    #     user = form.save(commit=False)
-    #
-    #     # Optionally: add any custom logic here for profile or user settings
-    #
-    #     # Save the user object to the database
-    #     user.save()
-    #
-    #     # Log in the user automatically after successful registration
-    #     username = form.cleaned_data.get('username')
-    #     password = form.cleaned_data.get('password')
-    #     user = authenticate(username=username, password=password)
-    #
-    #     if user is not None:
-    #         login(self.request, user)
-    #         messages.success(self.request, "Registration successful! You are now logged in.")
-    #
-    #     # Optionally redirect to another page, like profile page
-    #     return redirect('home')  # Or replace 'home' with the actual URL name
-
-    def form_invalid(self, form):
-        messages.error(self.request, "There were errors in your registration. Please check your inputs.")
-        return self.render_to_response({'form': form})
-
-class UserLoginView(LoginView):
-    template_name = 'users/login.html'
-    authentication_form = AuthenticationForm
+    success_url = reverse_lazy('home')
 
     def form_valid(self, form):
-        user = form.get_user()
+        user = form.save(commit=False)
+        user.set_password(form.cleaned_data['password'])  # Hash the password
+        user.save()
         login(self.request, user)
+        Profile.objects.create(user=user)
+        messages.success(self.request, f"Registration successful! Welcome, {user.username}!")
+        return super().form_valid(form)
 
-        if not hasattr(user, 'profile'):
-            Profile.objects.create(user=user)
+class UserLoginView(FormView):
+    template_name = 'users/login.html'
+    # authentication_form = AuthenticationForm
+    form_class = UserLoginForm
+    success_url = reverse_lazy('home')
+
+    def form_valid(self, form):
+        username = form.cleaned_data.get('username')
+        password = form.cleaned_data.get('password')
+
+        user = authenticate(username=username, password=password)
+        if user is not None:
+            login(self.request, user)
+            messages.success(self.request, f"Welcome back, {user.username}!")
+        else:
+            messages.error(self.request, "Invalid login credentials.")
 
         return super().form_valid(form)
 
-    def get_success_url(self):
-        return self.request.GET.get('next') or reverse_lazy('home')
+    def form_invalid(self, form):
+        messages.error(self.request, "Please correct the errors below.")
+        return super().form_invalid(form)
 
-# class UserUpdateView(UpdateView):
-#     form_class = EditProfileForm
-#     template_name = 'users/edit_profile.html'
-#     success_url = reverse_lazy('home')
-#
-#     def get_object(self):
-#         return self.request.user
+
 class UserUpdateView(LoginRequiredMixin, UpdateView):
     form_class = EditProfileForm
     template_name = 'users/edit_profile.html'
     success_url = reverse_lazy('home')
 
     def get_object(self):
-        # Allow users to edit their profile, but restrict status fields to admin
         return self.request.user
 
     def get_form_kwargs(self):
@@ -94,17 +76,7 @@ class ChangePasswordView(PasswordChangeView):
     template_name = 'users/change_password.html'
     success_url = reverse_lazy('password_changed_succesfully')
 
-# TODO:MAKE SHOW PROFILE
-# class ShowProfilePageView(DetailView):
-#     model = Profile
-#     template_name = 'users/profile_details.html'
-#     context_object_name = 'profile'
-#
-#     def get_context_data(self, **kwargs):
-#         context = super().get_context_data(**kwargs)
-#         profile = get_object_or_404(Profile, user__id=self.kwargs['pk'])
-#         context['profile'] = profile
-#         return context
+
 def password_success(request):
     context = {}
     return render(request, 'users/password_changed_succesfully.html', context)
@@ -138,7 +110,7 @@ def profile_edit(request, pk=None):
     else:
         form = ProfileForm(instance=profile)
 
-    return render(request, 'users/register.html', {'form': form, 'profile': profile})
+    return render(request, 'users/edit_profile.html', {'form': form, 'profile': profile})
 
 @login_required
 def profile_delete(request, pk):
@@ -148,39 +120,151 @@ def profile_delete(request, pk):
         return redirect('profile_list')
     return render(request, 'users/private/profile_delete.html', {'object': obj})
 
+
 #admin's crud - Post model
 def post_list(request):
     posts = Post.objects.all()
     return render(request, 'users/private/post_list.html', {'posts': posts})
 
-# TODO: make it redirect to edt_post.html
-# @login_required
-# def post_edit(request, pk=None):
-#     post = get_object_or_404(Post, pk=pk) if pk else None
-#
-#     if request.method == 'POST':
-#         form = PostForm(request.POST, request.FILES, instance=post)
-#         if form.is_valid():
-#             form.save()
-#             return redirect('post_list')
-#     else:
-#         form = PostForm(instance=post)
-#
-#     return render(request, 'crud/post_form.html', {'form': form, 'post': post})
+@login_required
+def post_edit(request, pk=None):
+    post = get_object_or_404(Post, pk=pk) if pk else None
+
+    if request.method == 'POST':
+        form = PostForm(request.POST, request.FILES, instance=post)
+        if form.is_valid():
+            form.save()
+            return redirect('post_list')
+    else:
+        form = PostForm(instance=post)
+
+    return render(request, 'users/private/edit_post.html', {'form': form, 'post': post})
 
 
 @login_required
 def post_delete(request, pk):
-    """
-    View to handle the deletion of a post.
-    """
     post = get_object_or_404(Post, pk=pk)
 
     if request.method == 'POST':
         post.delete()
         return redirect('post_list')
 
-    return render(request, 'crud/post_confirm_delete.html', {'post': post})
+    return render(request, 'users/private/post_delete.html', {'post': post})
+
+#admin's crud - Comment model
+@user_passes_test(admin_check)
+def comment_list(request):
+    comments = Comment.objects.all()
+    context = {'comments': comments}
+    return render(request, 'users/private/comment_list.html', context)
+
+@user_passes_test(admin_check)
+def comment_create(request):
+    if request.method == 'POST':
+        form = CommentForm(request.POST)
+        if form.is_valid():
+            form.save()
+            messages.success(request, "Comment created successfully.")
+            return redirect('admin_comments')
+    else:
+        form = CommentForm()
+
+    context = {'form': form, 'action': 'Create'}
+    return render(request, 'users/private/comment_create.html', context)
+
+@user_passes_test(admin_check)
+def comment_edit(request, pk):
+    comment = get_object_or_404(Comment, pk=pk)
+    if request.method == 'POST':
+        form = CommentForm(request.POST, instance=comment)
+        if form.is_valid():
+            form.save()
+            messages.success(request, "Comment updated successfully.")
+            return redirect('admin_comments')
+    else:
+        form = CommentForm(instance=comment)
+
+    context = {'form': form, 'action': 'Edit'}
+    return render(request, 'users/private/comment_edit.html', context)
+
+@user_passes_test(admin_check)
+def comment_delete(request, pk):
+    comment = get_object_or_404(Comment, pk=pk)
+    if request.method == 'POST':
+        comment.delete()
+        messages.success(request, "Comment deleted successfully.")
+        return redirect('admin_comments')
+
+    context = {'comment': comment}
+    return render(request, 'users/private/comment_delete.html', context)
+
+#admin's crud - Plant model
+#todo: make the filter by categories
+@user_passes_test(admin_check)
+def plant_list(request):
+    category_id = request.GET.get('category', None)  # Get the category ID from query parameters
+    if category_id:
+        plants = Plant.objects.filter(category__id=category_id)  # Filter plants by category
+    else:
+        plants = Plant.objects.all()  # Default to all plants
+
+    categories = Category.objects.all()  # Fetch all categories for filtering
+    return render(request, 'users/private/plants_list.html', {
+        'plants': plants,
+        'categories': categories,
+        'selected_category': category_id,  # Keep track of selected category
+    })
+
+@user_passes_test(admin_check)
+def plant_edit(request, pk):
+    if pk == 0:  # Create a new plant
+        plant = None
+        form = PlantForm(request.POST or None, request.FILES or None)
+    else:  # Edit an existing plant
+        plant = get_object_or_404(Plant, pk=pk)
+        form = PlantForm(request.POST or None, request.FILES or None, instance=plant)
+
+    if request.method == 'POST':
+        if form.is_valid():
+            form.save()
+            messages.success(request, f"Plant {'created' if pk == 0 else 'updated'} successfully!")
+            return redirect('admin_plant_list')
+        else:
+            messages.error(request, "Please correct the errors below.")
+
+    return render(request, 'users/private/plant_edit.html', {'form': form, 'plant': plant})
+
+@user_passes_test(admin_check)
+def plant_delete(request, pk):
+    plant = get_object_or_404(Plant, pk=pk)
+    if request.method == 'POST':
+        plant.delete()
+        messages.success(request, "Plant deleted successfully!")
+        return redirect('admin_plant_list')
+
+    return render(request, 'users/private/delete_plant.html', {'plant': plant})
+
+#admin's crud - Category model
+@user_passes_test(admin_check)
+def categories_list(request):
+    categories = Category.objects.all()
+    return render(request, 'users/private/category_list.html', {'categories': categories})
+@user_passes_test(admin_check)
+def category_edit(request, pk):
+    category = get_object_or_404(Category, pk=pk)
+    if request.method == 'POST':
+        category.name = request.POST['name']
+        category.save()
+        return redirect('categories_list')
+    return render(request, 'users/private/category_edit.html', {'category': category})
+
+@user_passes_test(admin_check)
+def category_delete(request, pk):
+    category = get_object_or_404(Category, pk=pk)
+    category.delete()
+    return redirect('categories_list')
+
+
 @user_passes_test(staff_check)
 def admin_dashboard(request):
     deleted_posts = Post.objects.filter(is_deleted=True)
@@ -208,7 +292,6 @@ def superuser_dashboard(request):
     latest_comments = Comment.objects.all().order_by('-created_at')[:5]
     posts_with_likes = Post.objects.annotate(num_likes=Count('likes')).order_by('-num_likes')[:5]
 
-    # Model Counts
     profiles_count = Profile.objects.count()
     posts_count = Post.objects.count()
     comments_count = Comment.objects.count()
@@ -216,10 +299,6 @@ def superuser_dashboard(request):
     categories_count = Category.objects.count()
 
     context = {
-        'deleted_posts': deleted_posts,
-        'active_users': active_users,
-        'latest_comments': latest_comments,
-        'posts_with_likes': posts_with_likes,
         'profiles_count': profiles_count,
         'posts_count': posts_count,
         'comments_count': comments_count,
