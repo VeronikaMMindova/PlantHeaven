@@ -1,6 +1,14 @@
 import re
 from django.core.exceptions import ValidationError
+from django.core.validators import URLValidator
 
+
+def validate_socials_url(value):
+    url_validator = URLValidator(schemes=['http', 'https'])
+    try:
+        url_validator(value)
+    except ValidationError:
+        raise ValidationError(f'{value} is not a valid URL. Please enter a valid Facebook/Instagram URL.')
 def staff_check(user):
     return user.is_staff
 

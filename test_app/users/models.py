@@ -2,8 +2,9 @@ from django.contrib.auth.models import User
 from django.core.validators import MaxLengthValidator
 from django.db import models
 
+from test_app.blog.validators import validate_image_file
 from test_app.users.validators import last_name_validate_only_letters, \
-    first_name_validate_only_letters
+    first_name_validate_only_letters, validate_socials_url
 
 
 class Profile(models.Model):
@@ -39,6 +40,7 @@ class Profile(models.Model):
         upload_to='images/profile/',
         null=True,
         blank=True,
+        validators=[validate_image_file],
     )
     bio = models.TextField(
         max_length=BIO_MAX_LENTGH,
@@ -48,11 +50,15 @@ class Profile(models.Model):
     facebook_url = models.URLField(
         max_length=FACEBOOK_URL_LENTGH,
         null=True,
-        blank=True)
+        blank=True,
+        validators=[validate_socials_url],
+    )
     instagram_url = models.URLField(
         max_length=INSTAGRAM_URL_LENTGH,
         null=True,
-        blank=True)
+        blank=True,
+        validators=[validate_socials_url],
+    )
     is_staff = models.BooleanField(default=False)
     is_superuser = models.BooleanField(default=False)
 

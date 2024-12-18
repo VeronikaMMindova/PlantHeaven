@@ -4,7 +4,6 @@ from django.test import TestCase
 from test_app.users.models import Profile
 
 
-# Create your tests here.
 class TestUsers(TestCase):
     def __init__(self, methodName: str = "runTest"):
         super().__init__(methodName)

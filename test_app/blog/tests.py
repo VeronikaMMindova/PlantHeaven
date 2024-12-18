@@ -1,6 +1,3 @@
-from multiprocessing.connection import Client
-
-from django.contrib.auth import get_user_model
 from django.contrib.auth.models import User
 from django.core.exceptions import ValidationError
 from django.test import TestCase
@@ -49,7 +46,6 @@ class PlantModelTests(TestCase):
         self.category = Category.objects.create(name='Test Category')
 
     def test_plant_creation(self):
-        # Creating a Plant instance
         plant = Plant.objects.create(
             name='Rose',
             habitat='Garden',
@@ -67,7 +63,6 @@ class PlantModelTests(TestCase):
         self.assertEqual(plant.type_of_plant, 'Flower')
 
     def test_plant_str_method(self):
-        # Creating a Plant instance
         plant = Plant.objects.create(
             name='Sunflower',
             habitat='Field',
@@ -78,7 +73,6 @@ class PlantModelTests(TestCase):
         self.assertEqual(str(plant), 'Sunflower')
 
     def test_plant_type_choices(self):
-        # Create a Plant with different types
         flower_plant = Plant.objects.create(
             name='Tulip',
             habitat='Garden',
@@ -103,3 +97,17 @@ class PlantModelTests(TestCase):
         invalid_name_plant = Plant(name='1234', habitat='Field')
         with self.assertRaises(ValidationError):
             invalid_name_plant.full_clean()
+
+class AddCategoryViewTests(TestCase):
+
+    def setUp(self):
+        self.user = User.objects.create_user(username='test', password='password', is_staff=True)
+        self.profile = Profile.objects.create(user=self.user)
+        self.url = reverse('add_category')
+
+    def test_create_category_by_staff_user(self):
+        self.client.login(username='test', password='password')
+        response = self.client.post(self.url, {'name': 'Test Category'})
+        self.assertEqual(response.status_code, 302)
+        self.assertTrue(Category.objects.filter(name='Test Category').exists(), "Category was not created")
+

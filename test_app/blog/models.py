@@ -1,4 +1,5 @@
-from test_app.blog.validators import plant_habitat_validate_only_letters, title_validate_only_letters
+from test_app.blog.validators import plant_habitat_validate_only_letters, title_validate_only_letters, \
+    validate_image_file, validate_wikipedia_url
 from test_app.users.models import Profile
 from django.db import models
 from django.urls import reverse
@@ -80,7 +81,9 @@ class Plant(models.Model):
         max_length=100,
         blank=False,
         null=False,
-        default='Plant')
+        default='Plant',
+        validators=[title_validate_only_letters],
+    )
     habitat = models.CharField(
         max_length=100,
         blank=False,
@@ -91,10 +94,12 @@ class Plant(models.Model):
         upload_to='images/plants/',
         blank=True,
         null=True,
+        validators=[validate_image_file],
     )
     wikipedia_url = models.URLField(
         blank=True,
         null=True,
+        validators=[validate_wikipedia_url],
     )
     category = models.ForeignKey(
         Category,
