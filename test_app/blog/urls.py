@@ -1,6 +1,7 @@
+from django.conf.urls.static import static
 from django.urls import path
 
-
+from test_app import settings
 from test_app.blog.views import PostDetailView, AddPostView, DeletePostView, UpdatePostView, \
     AddCategoryView, about_us_view, our_blog_view, like_post, search_plants, add_comment, \
     plant_list, add_plant, delete_plant

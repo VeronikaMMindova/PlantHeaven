@@ -58,18 +58,29 @@ class UserLoginView(FormView):
         return super().form_invalid(form)
 
 
-class UserUpdateView(LoginRequiredMixin, UpdateView):
-    form_class = EditProfileForm
+class UserUpdateView(LoginRequiredMixin, FormView):
     template_name = 'users/edit_profile.html'
+    form_class = EditProfileForm
     success_url = reverse_lazy('home')
-
-    def get_object(self):
-        return self.request.user
 
     def get_form_kwargs(self):
         kwargs = super().get_form_kwargs()
-        kwargs['user'] = self.request.user
+        profile = Profile.objects.get(user=self.request.user)
+        kwargs.update({
+            'instance': profile,  # Pass the Profile instance
+            'user': self.request.user,  # Pass the User object
+        })
         return kwargs
+
+    def form_valid(self, form):
+        form.save()
+        return super().form_valid(form)
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['user'] = self.request.user  # Ensure the user is available in the template
+        return context
+
 
 class ChangePasswordView(PasswordChangeView):
     form_class = ChangePasswordForm

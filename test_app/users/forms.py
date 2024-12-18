@@ -7,58 +7,37 @@ from django.core.exceptions import ValidationError
 from test_app.users.models import Profile
 from test_app.users.validators import clean_password_confirm, custom_password_validator
 
-
-class EditProfileForm(UserChangeForm):
+class EditProfileForm(forms.ModelForm):
     username = forms.CharField(
         max_length=50,
         required=True,
-        widget=forms.TextInput(attrs={'class': 'form-control', 'id': 'current_user'})
-    )
-    first_name = forms.CharField(
-        max_length=50,
-        required=True,
-        widget=forms.TextInput(attrs={'class': 'form-control', 'id': 'current_first_name'})
-    )
-    last_name = forms.CharField(
-        max_length=50,
-        required=True,
-        widget=forms.TextInput(attrs={'class': 'form-control', 'id': 'current_last_name'})
-    )
-    profile_pic = forms.ImageField(
-        required=False
-    )
-    is_superuser = forms.BooleanField(
-        required=False,
-        widget=forms.HiddenInput()
-    )
-    is_staff = forms.BooleanField(
-        required=False,
-        widget=forms.HiddenInput()
-    )
-    is_active = forms.BooleanField(
-        required=False,
-        widget=forms.HiddenInput()
+        widget=forms.TextInput(attrs={'class': 'form-control'}),
     )
 
     class Meta:
-        model = User
-        fields = ('username', 'first_name', 'last_name', 'is_superuser', 'is_staff', 'is_active')
+        model = Profile
+        fields = ('first_name', 'last_name', 'profile_pic', 'bio', 'facebook_url', 'instagram_url')
 
     def __init__(self, *args, **kwargs):
-        user = kwargs.pop('user', None)  # Extract the current user
+        self.user = kwargs.pop('user', None)
         super(EditProfileForm, self).__init__(*args, **kwargs)
 
-        # Remove the password field if it exists
-        self.fields.pop('password', None)
+        if self.user:
+            self.fields['username'].initial = self.user.username
 
-        # Hide or disable status fields for non-admin users
-        if not user.is_superuser:
-            self.fields['is_superuser'].required = False
-            self.fields['is_staff'].required = False
-            self.fields['is_active'].required = False
-            self.fields['is_superuser'].widget = forms.HiddenInput()
-            self.fields['is_staff'].widget = forms.HiddenInput()
-            self.fields['is_active'].widget = forms.HiddenInput()
+    def save(self, commit=True):
+        profile = super().save(commit=False)
+
+        if self.user:
+            self.user.username = self.cleaned_data['username']
+            if commit:
+                self.user.save()
+
+        if commit:
+            profile.save()
+
+        return profile
+
 
 class UserRegistrationForm(forms.ModelForm):
     password = forms.CharField(widget=forms.PasswordInput, required=True, help_text="Password must include uppercase, lowercase, a number, and a special character.",  label="Password")

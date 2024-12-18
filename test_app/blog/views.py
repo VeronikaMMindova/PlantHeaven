@@ -8,9 +8,8 @@ from django.views import View
 from django.views.generic import DetailView, CreateView, UpdateView
 
 from test_app.blog.models import Post, Category, Plant, Comment
-from test_app.blog.forms import PostForm, EditForm, CommentForm, CategoryForm, PlantForm
-from test_app.users.forms import ProfileForm
-from test_app.users.models import Profile
+from test_app.blog.forms import PostForm,  CommentForm, CategoryForm, PlantForm
+
 
 
 class PostDetailView(DetailView):
@@ -119,14 +118,13 @@ class AddCategoryView(LoginRequiredMixin, UserPassesTestMixin, CreateView):
     template_name = 'users/private/add_category.html'
 
     def test_func(self):
-        # Allow only staff or admin users
         return self.request.user.is_staff or self.request.user.is_superuser
 
-    def get_permissions(self):
-        if self.request.user.is_authenticated:
-            return super().get_permissions()
-        else:
-            return []
+    # def get_permissions(self):
+    #     if self.request.user.is_authenticated:
+    #         return super().get_permissions()
+    #     else:
+    #         return []
 
 
 # function-based view

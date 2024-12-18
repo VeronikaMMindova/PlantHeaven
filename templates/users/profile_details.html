@@ -4,13 +4,6 @@
 {% block title %}Profile Details{% endblock %}
 {% block extra_css %}<link rel="stylesheet" href="{% static 'css/profile_details.css' %}" >{% endblock %}
 {% block content %}
-{# <h1>{{ profile.user.username }}'s Profile</h1>#}
-{#    <p>Profile Picture: {{ profile.profile_pic }}</p>#}
-{#    <p>First Name: {{ profile.first_name }}</p>#}
-{#    <p>Last Name: {{ profile.last_name }}</p>#}
-{#    <p>Bio: {{ profile.bio }}</p>#}
-{#    <p>Facebook: <a href="{{ profile.facebook_url }}">{{ profile.facebook_url }}</a></p>#}
-{#    <p>Instagram: <a href="{{ profile.instagram_url }}">{{ profile.instagram_url }}</a></p>#}
    <div class="profile-container">
     <div class="profile-header">
         {% if profile.profile_pic %}
@@ -24,11 +17,10 @@
     </div>
 
     <div class="profile-details">
-{#    TODO:why not displaying the admins first name last name etc#}
         {% csrf_token %}
         {{ form.as_p}}
-        <p><strong>First Name:</strong> {{ profile.first_name|default:"Not provided"  }}</p>
-        <p><strong>Last Name:</strong> {{ profile.last_name|default:"Not provided" }}</p>
+         <p><strong>Name:</strong> {{ profile.user.get_full_name|default:"Not provided" }}</p>
+        <p><strong>Email:</strong> {{ profile.user.email }}</p>
         <p><strong>Bio:</strong> {{ profile.bio|default:"No bio added yet." }}</p>
         <p>
             <strong>Facebook:</strong>
