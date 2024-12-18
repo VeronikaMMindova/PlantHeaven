@@ -20,14 +20,14 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/5.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-#SECRET_KEY = 'django-insecure-vw_!ragq0hr@^vv2tqcrd*(97ney9$+aocswy%t3w8gz)!6*e$'
+SECRET_KEY = 'django-insecure-vw_!ragq0hr@^vv2tqcrd*(97ney9$+aocswy%t3w8gz)!6*e$'
 #SECRET_KEY = os.environ.get('SECRET_KEY')
-SECRET_KEY = "b13ffe9ba7abd3b202c0868f75100e88"
+#SECRET_KEY = "b13ffe9ba7abd3b202c0868f75100e88"
 
 # SECURITY WARNING: don't run with debug turned on in production!
 # DEBUG = True
 #DEBUG = os.environ.get('DEBUG', 'False').lower() == 'true'
-DEBUG = False
+DEBUG = True
 
 
 STATIC_URL = '/static/'  # URL to access static files
@@ -36,7 +36,7 @@ STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]  # Local static file direc
 #
 # ALLOWED_HOSTS = ['127.0.0.1', 'localhost']
 #ALLOWED_HOSTS = os.environ.get("ALLOWED_HOSTS", "").split()
-ALLOWED_HOSTS = ['plantheaven.onrender.com', 'localhost' ]
+ALLOWED_HOSTS = ['127.0.0.1','plantheaven.onrender.com', 'localhost']
 
 # Application definition
 
@@ -89,18 +89,31 @@ WSGI_APPLICATION = 'test_app.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
 
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.postgresql_psycopg2',
+#         'NAME': 'green_forum_database',
+#         'USER': 'postgres',
+#         'PASSWORD': '1',
+#         'HOST': '127.0.0.1',
+#         'PORT': '5432',
+#     }
+# }
+# INTERNAL DATEBASE URL: dpg-cthg4b23esus73b612ng-a
+# EXTERNAL DATEBASE URL: dpg-cthg4b23esus73b612ng-a.oregon-postgres.render.com
+database_host = os.environ.get('DATABASE_URL', '')
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
         'NAME': 'green_forum_database',
-        'USER': 'postgres',
-        'PASSWORD': '1',
-        'HOST': '127.0.0.1',
+        'USER': 'green_forum_database_user',
+        'PASSWORD': 'ry3zSAfatjWapFjQoR6MNZQlOcVQwFgM',
+        'HOST': database_host,
         'PORT': '5432',
     }
 }
-# database_url = os.environ.get('DATABASE_URL', '')
-DATABASES['default'] = dj_database_url.parse("postgresql://green_forum_database_user:ry3zSAfatjWapFjQoR6MNZQlOcVQwFgM@dpg-cthg4b23esus73b612ng-a/green_forum_database")
+#database_url = os.environ.get('DATABASE_URL', '')
+# DATABASES['default'] = dj_database_url.parse("postgresql://green_forum_database_user:ry3zSAfatjWapFjQoR6MNZQlOcVQwFgM@dpg-cthg4b23esus73b612ng-a/green_forum_database")
 # Password validation
 # https://docs.djangoproject.com/en/5.1/ref/settings/#auth-password-validators
 
