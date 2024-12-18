@@ -20,14 +20,14 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/5.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-vw_!ragq0hr@^vv2tqcrd*(97ney9$+aocswy%t3w8gz)!6*e$'
-#SECRET_KEY = os.environ.get('SECRET_KEY')
-#SECRET_KEY = "b13ffe9ba7abd3b202c0868f75100e88"
+#SECRET_KEY = 'django-insecure-vw_!ragq0hr@^vv2tqcrd*(97ney9$+aocswy%t3w8gz)!6*e$'
+SECRET_KEY = os.environ.get('SECRET_KEY')
+# SECRET_KEY = "b13ffe9ba7abd3b202c0868f75100e88"
 
 # SECURITY WARNING: don't run with debug turned on in production!
 # DEBUG = True
-#DEBUG = os.environ.get('DEBUG', 'False').lower() == 'true'
-DEBUG = True
+DEBUG = os.environ.get('DEBUG', 'False').lower() == 'true'
+
 
 
 STATIC_URL = '/static/'  # URL to access static files
@@ -36,7 +36,7 @@ STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]  # Local static file direc
 #
 # ALLOWED_HOSTS = ['127.0.0.1', 'localhost']
 #ALLOWED_HOSTS = os.environ.get("ALLOWED_HOSTS", "").split()
-ALLOWED_HOSTS = ['127.0.0.1','plantheaven.onrender.com', 'localhost']
+ALLOWED_HOSTS = ['127.0.0.1', 'plantheaven.onrender.com', 'localhost']
 
 # Application definition
 
