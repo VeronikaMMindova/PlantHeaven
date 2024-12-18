@@ -190,14 +190,13 @@ def add_plant(request):
     if request.method == 'POST':
         form = PlantForm(request.POST, request.FILES)
         if form.is_valid():
-            form.save()
-            return redirect('category_plants')
+            plant = form.save()
+            category_name = plant.category.name
+            return redirect('category_plants', category_name=category_name)
     else:
         form = PlantForm()
 
     return render(request, 'users/private/add_plant.html', {'form': form})
-
-
 @login_required
 def delete_plant(request, pk):
     plant = get_object_or_404(Plant, pk=pk)

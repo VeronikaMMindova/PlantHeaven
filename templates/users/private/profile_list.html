@@ -1,8 +1,11 @@
 {% extends 'base.html' %}
+{% load static %}
 {% block title %}Profiles{% endblock %}
+{% block extra_css %}<link rel="stylesheet" href="{% static 'css/admin_pages/profile_list.css' %}">{% endblock %}
+
 {% block content %}
 <h1>Profiles</h1>
-<a href="{% url 'profile_edit' pk=0 %}">Create New Profile</a>
+<a href="{% url 'profile_edit' pk=0 %}" class="btn-create">Create New Profile</a>
 <table>
     <tr>
         <th>User</th>
@@ -11,9 +14,9 @@
     {% for profile in profiles %}
     <tr>
         <td>{{ profile.user }}</td>
-        <td>
-            <a href="{% url 'profile_edit' pk=profile.pk %}">Edit</a> |
-            <a href="{% url 'profile_delete' pk=profile.pk %}">Delete</a>
+        <td class="buttons">
+            <a href="{% url 'profile_edit' pk=profile.pk %}" class="btn btn-warning btn-sm">Edit</a>
+            <a href="{% url 'profile_delete' pk=profile.pk %}" class="btn btn-danger btn-sm">Delete</a>
         </td>
     </tr>
     {% endfor %}

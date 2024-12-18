@@ -158,19 +158,6 @@ def comment_list(request):
     context = {'comments': comments}
     return render(request, 'users/private/comment_list.html', context)
 
-@user_passes_test(admin_check)
-def comment_create(request):
-    if request.method == 'POST':
-        form = CommentForm(request.POST)
-        if form.is_valid():
-            form.save()
-            messages.success(request, "Comment created successfully.")
-            return redirect('admin_comments')
-    else:
-        form = CommentForm()
-
-    context = {'form': form, 'action': 'Create'}
-    return render(request, 'users/private/comment_create.html', context)
 
 @user_passes_test(admin_check)
 def comment_edit(request, pk):
@@ -179,7 +166,6 @@ def comment_edit(request, pk):
         form = CommentForm(request.POST, instance=comment)
         if form.is_valid():
             form.save()
-            messages.success(request, "Comment updated successfully.")
             return redirect('admin_comments')
     else:
         form = CommentForm(instance=comment)
@@ -192,14 +178,12 @@ def comment_delete(request, pk):
     comment = get_object_or_404(Comment, pk=pk)
     if request.method == 'POST':
         comment.delete()
-        messages.success(request, "Comment deleted successfully.")
         return redirect('admin_comments')
 
     context = {'comment': comment}
     return render(request, 'users/private/comment_delete.html', context)
 
 #admin's crud - Plant model
-#todo: make the filter by categories
 @user_passes_test(admin_check)
 def plants_list(request):
     plants = Plant.objects.all()
@@ -207,17 +191,17 @@ def plants_list(request):
 
 @user_passes_test(admin_check)
 def plant_edit(request, pk):
-    if pk == 0:  # Create a new plant
+    if pk == 0:
         plant = None
         form = PlantForm(request.POST or None, request.FILES or None)
-    else:  # Edit an existing plant
+    else:
         plant = get_object_or_404(Plant, pk=pk)
         form = PlantForm(request.POST or None, request.FILES or None, instance=plant)
 
     if request.method == 'POST':
         if form.is_valid():
             form.save()
-            messages.success(request, f"Plant {'created' if pk == 0 else 'updated'} successfully!")
+            # messages.success(request, f"Plant {'created' if pk == 0 else 'updated'} successfully!")
             return redirect('plants_list')
         else:
             messages.error(request, "Please correct the errors below.")
@@ -229,7 +213,7 @@ def plant_delete(request, pk):
     plant = get_object_or_404(Plant, pk=pk)
     if request.method == 'POST':
         plant.delete()
-        messages.success(request, "Plant deleted successfully!")
+        # messages.success(request, "Plant deleted successfully!")
         return redirect('plants_list')
 
     return render(request, 'users/private/delete_plant.html', {'plant': plant})
@@ -280,25 +264,3 @@ def admin_dashboard(request):
 
     return render(request, 'users/private/dashboard.html', context)
 
-@user_passes_test(admin_check)
-def superuser_dashboard(request):
-    deleted_posts = Post.objects.filter(is_deleted=True)
-    thirty_days_ago = now() - timedelta(days=30)
-    active_users = User.objects.filter(last_login__gte=thirty_days_ago)
-    latest_comments = Comment.objects.all().order_by('-created_at')[:5]
-    posts_with_likes = Post.objects.annotate(num_likes=Count('likes')).order_by('-num_likes')[:5]
-
-    profiles_count = Profile.objects.count()
-    posts_count = Post.objects.count()
-    comments_count = Comment.objects.count()
-    plants_count = Plant.objects.count()
-    categories_count = Category.objects.count()
-
-    context = {
-        'profiles_count': profiles_count,
-        'posts_count': posts_count,
-        'comments_count': comments_count,
-        'plants_count': plants_count,
-        'categories_count': categories_count,
-    }
-    return render(request, 'users/private/superuser_dashboard.html', context)

@@ -1,11 +1,10 @@
 {% extends 'base.html' %}
+{% load static %}
 
 {% block title %}Post List{% endblock %}
-
+{% block extra_css %}<link rel="stylesheet" href="{% static 'css/admin_pages/post_list.css' %}">{% endblock %}
 {% block content %}
 <h1>Post List</h1>
-
-<a href="{% url 'post_edit' pk=0 %}" class="btn btn-success">Create New Post</a>
 
 <table class="table mt-3">
     <thead>
@@ -13,6 +12,8 @@
             <th>ID</th>
             <th>Title</th>
             <th>Author</th>
+            <th>Likes</th>
+            <th>Liked By</th>
             <th>Created At</th>
             <th>Actions</th>
         </tr>
@@ -23,7 +24,19 @@
                 <td>{{ post.id }}</td>
                 <td>{{ post.title }}</td>
                 <td>{{ post.author }}</td>
-                <td>{{ post.created_at|date:"Y-m-d H:i" }}</td>
+                 <td>{{ post.total_likes }}</td>
+                <td>
+                    {% if post.likes.exists %}
+                        <ul class="likes">
+                            {% for profile in post.likes.all %}
+                                <li>{{ profile.user.username }}</li>
+                            {% endfor %}
+                        </ul>
+                    {% else %}
+                        <span>No likes</span>
+                    {% endif %}
+                </td>
+                <td>{{ post.created_at|date:"d-m-Y H:i" }}</td>
                 <td>
                     <a href="{% url 'post_edit' post.id %}" class="btn btn-warning btn-sm">Edit</a>
                     <a href="{% url 'post_delete_by_admin' post.id %}" class="btn btn-danger btn-sm">Delete</a>

@@ -2,14 +2,12 @@ from django.urls import path
 
 from test_app.blog.views import plant_list
 from test_app.users.views import UserLoginView, UserRegistrationView, UserUpdateView, ChangePasswordView, \
-    password_success, logout_view, admin_dashboard, profile_details, superuser_dashboard, profile_list, profile_edit, \
-    profile_delete, post_list, post_edit, post_delete, comment_list, comment_create, comment_edit, comment_delete, \
+    password_success, logout_view, admin_dashboard, profile_details, profile_list, profile_edit, \
+    profile_delete, post_list, post_edit, post_delete, comment_list, comment_edit, comment_delete, \
     plant_delete, plant_edit, category_edit, category_delete, plants_list, category_list
 
 urlpatterns = [
     # private part
-    path('admin/dashboard/',superuser_dashboard, name='superuser_dashboard'),
-
     # admin's crud on profile model
     path('admin/profiles/', profile_list, name='profile_list'),
     path('admin/profiles/edit/<int:pk>/', profile_edit, name='profile_edit'),
@@ -22,7 +20,6 @@ urlpatterns = [
     #
     # #admin's crud on comment model
     path('admin/comments/', comment_list, name='admin_comments'),
-    path('admin/comments/create/',comment_create, name='comment_create'),
     path('admin/comments/edit/<int:pk>/', comment_edit, name='comment_edit'),
     path('admin/comments/delete/<int:pk>/', comment_delete, name='comment_delete'),
 

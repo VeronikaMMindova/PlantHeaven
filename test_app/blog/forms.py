@@ -64,11 +64,11 @@ class PlantForm(forms.ModelForm):
         model = Plant
         fields = ['name', 'habitat', 'image', 'wikipedia_url', 'category', 'type_of_plant']
 
-    widgets = {
-        'name': forms.TextInput(attrs={'placeholder': 'Plant Name'}),
-        'habitat': forms.TextInput(attrs={'placeholder': 'Habitat'}),
-        'wikipedia_url': forms.URLInput(attrs={'placeholder': 'Wikipedia URL (optional)'}),
-        'type_of_plant': forms.Select(),
-        'category': forms.Select(),
-        'image': forms.ClearableFileInput(attrs={'accept': 'image/*'}),
-    }
+        widgets = {
+            'name': forms.TextInput(attrs={'placeholder': 'Plant Name'}),
+            'habitat': forms.TextInput(attrs={'placeholder': 'Habitat'}),
+            'wikipedia_url': forms.URLInput(attrs={'placeholder': 'Wikipedia URL (optional)'}),
+            'type_of_plant': forms.Select(),
+            'category': forms.Select(),
+            'image': forms.ClearableFileInput(attrs={'accept': 'image/*'}),
+        }

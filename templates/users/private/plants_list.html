@@ -1,13 +1,13 @@
 {% extends 'base.html' %}
+{% load static %}
 
 {% block title %}All Plants{% endblock %}
-
+{% block extra_css %}<link rel="stylesheet" href="{% static 'css/admin_pages/category_list.css' %}">{% endblock %}
 {% block content %}
+
 <h1>All Plants</h1>
-
-<a href="{% url 'plant_edit' pk=0 %}" class="btn btn-success">Add New Plant</a>
-
 <table class="table mt-3">
+
     <thead>
         <tr>
             <th>ID</th>
@@ -23,11 +23,12 @@
             <td>{{ plant.id }}</td>
             <td>{{ plant.name }}</td>
             <td>{{ plant.type_of_plant }}</td>
-            <td>{{ plant.category.name }}</td> <!-- Display the category name -->
+            <td>{{ plant.category.name }}</td>
             <td>
                 <a href="{% url 'plant_edit' pk=plant.id %}" class="btn btn-warning btn-sm">Edit Plant</a>
                 <a href="{% url 'plant_delete' pk=plant.id %}" class="btn btn-danger btn-sm">Delete Plant</a>
             </td>
+
         </tr>
         {% empty %}
         <tr>

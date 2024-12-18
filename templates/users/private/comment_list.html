@@ -1,11 +1,11 @@
 {% extends 'base.html' %}
+{% load static %}
 
-{% block title %}Admin: Manage Comments{% endblock %}
-
+{% block title %}All Comments{% endblock %}
+{% block extra_css %}<link rel="stylesheet" href="{% static 'css/admin_pages/comment_list.css' %}">{% endblock %}
 {% block content %}
 <h1>Manage Comments</h1>
 
-<a href="{% url 'comment_create' %}" class="btn btn-success mb-3">Create New Comment</a>
 
 <table class="table">
     <thead>
@@ -23,15 +23,13 @@
             <tr>
                 <td>{{ comment.id }}</td>
                 <td>{{ comment.post.title }}</td>
-                <td>{{ comment.author }}</td>
+                <td>{{ comment.post.author }}</td>
                 <td>{{ comment.content|truncatewords:10 }}</td>
-                <td>{{ comment.created_at|date:"Y-m-d H:i" }}</td>
+                <td>{{ comment.created_at|date:"d-m-Y H:i" }}</td>
                 <td>
                     <a href="{% url 'comment_edit' comment.id %}" class="btn btn-warning btn-sm">Edit</a>
-                    <form action="{% url 'comment_delete' comment.id %}" method="post" style="display:inline;">
-                        {% csrf_token %}
-                        <button type="submit" class="btn btn-danger btn-sm">Delete</button>
-                    </form>
+                    <a href="{% url 'comment_delete' comment.id %}" class="btn btn-danger">Delete</a>
+
                 </td>
             </tr>
         {% empty %}

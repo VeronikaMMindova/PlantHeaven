@@ -40,15 +40,13 @@ def HomeView(request):
 
 
 def plants_by_category(request, category_name):
-    # Get the Category object, or return a 404 if it does not exist
     category = get_object_or_404(Category, name=category_name)
 
-    # Get the plants that belong to this category
     plants = Plant.objects.filter(category=category)
 
     context = {
         "plants": plants,
-        "category_name": category.name,  # Pass category name to the template
+        "category_name": category.name,
     }
 
     return render(request, 'blog/plant_list.html', context)

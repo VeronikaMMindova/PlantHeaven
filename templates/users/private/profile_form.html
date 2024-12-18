@@ -1,13 +1,11 @@
 {% extends 'base.html' %}
+{% load static %}
 
-{% block title %}
-    {% if profile %}Edit Profile{% else %}Create Profile{% endif %}
-{% endblock %}
+{% block title %}Edit Profile{% endblock %}
+{% block extra_css %}<link rel="stylesheet" href="{% static 'css/admin_pages/category_edit.css' %}">{% endblock %}
 
 {% block content %}
-<h1>
-    {% if profile %}Edit Profile{% else %}Create Profile{% endif %}
-</h1>
+<h1>Edit Profile</h1>
 
 <form method="post" enctype="multipart/form-data">
     {% csrf_token %}

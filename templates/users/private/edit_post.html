@@ -1,20 +1,15 @@
 {% extends 'base.html' %}
+{% load static %}
 
-{% block title %}
-    {% if post %}Edit Post{% else %}Create Post{% endif %}
-{% endblock %}
-
+{% block title %}Edit Post{% endblock %}
+{% block extra_css %}<link rel="stylesheet" href="{% static 'css/admin_pages/plant_edit.css' %}">{% endblock %}
 {% block content %}
-<h1>
-    {% if post %}Edit Post{% else %}Create Post{% endif %}
-</h1>
+<h1>Edit Post</h1>
 
 <form method="post" enctype="multipart/form-data">
     {% csrf_token %}
     {{ form.as_p }}
-    <button type="submit" class="btn btn-primary">
-        {% if post %}Update{% else %}Create{% endif %}
-    </button>
+    <button type="submit" class="btn btn-primary">Update</button>
     <a href="{% url 'post_list' %}" class="btn btn-secondary">Cancel</a>
 </form>
 {% endblock %}
