@@ -21,15 +21,22 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 # SECURITY WARNING: keep the secret key used in production secret!
 #SECRET_KEY = 'django-insecure-vw_!ragq0hr@^vv2tqcrd*(97ney9$+aocswy%t3w8gz)!6*e$'
-SECRET_KEY = os.environ.get('SECRET_KEY')
+#SECRET_KEY = os.environ.get('SECRET_KEY')
+SECRET_KEY = "b13ffe9ba7abd3b202c0868f75100e88"
 
 # SECURITY WARNING: don't run with debug turned on in production!
 # DEBUG = True
-DEBUG = os.environ.get('DEBUG', 'False').lower() == 'true'
+#DEBUG = os.environ.get('DEBUG', 'False').lower() == 'true'
+DEBUG = False
+
+
+STATIC_URL = '/static/'  # URL to access static files
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')  # Deployment directory
+STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]  # Local static file directories
 #
 # ALLOWED_HOSTS = ['127.0.0.1', 'localhost']
-ALLOWED_HOSTS = os.environ.get("ALLOWED_HOSTS").split(" ")
-
+#ALLOWED_HOSTS = os.environ.get("ALLOWED_HOSTS", "").split()
+ALLOWED_HOSTS = ['plantheaven.onrender.com', 'localhost' ]
 
 # Application definition
 
@@ -46,6 +53,9 @@ INSTALLED_APPS = [
 ]
 
 MIDDLEWARE = [
+
+    'whitenoise.middleware.WhiteNoiseMiddleware',
+
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -53,8 +63,9 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-]
 
+]
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 ROOT_URLCONF = 'test_app.urls'
 
 TEMPLATES = [
@@ -88,8 +99,8 @@ DATABASES = {
         'PORT': '5432',
     }
 }
-database_url = os.environ.get('DATABASE_URL')
-DATABASES['default'] = dj_database_url.parse(database_url)
+# database_url = os.environ.get('DATABASE_URL', '')
+DATABASES['default'] = dj_database_url.parse("postgresql://green_forum_database_user:ry3zSAfatjWapFjQoR6MNZQlOcVQwFgM@dpg-cthg4b23esus73b612ng-a/green_forum_database")
 # Password validation
 # https://docs.djangoproject.com/en/5.1/ref/settings/#auth-password-validators
 
@@ -121,12 +132,12 @@ USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.1/howto/static-files/
-STATIC_ROOT = '/var/www/plantheaven.onrender.com/static'
-STATIC_URL = 'static/'
-STATICFILES_DIRS = (
-    BASE_DIR / 'static/',
-    'var/www/static/'
-)
+#STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+#STATIC_URL = 'static/'
+#STATICFILES_DIRS = (
+#    BASE_DIR / 'static/',
+#)
+
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 # Default primary key field type

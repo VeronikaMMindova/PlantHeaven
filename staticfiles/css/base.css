@@ -1,0 +1,141 @@
+@import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;700&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Patrick+Hand&display=swap");
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Patrick Hand', cursive;
+    line-height: 1.6;
+    background: linear-gradient(to right, #483e4a, #6fc76f);
+    color: #333;
+}
+.logo-text .plant {
+    font-family: 'Dancing Script', cursive;
+    font-size: 2.5rem;
+}
+
+.logo-text .heaven {
+    font-family: 'Patrick Hand', cursive;
+    font-size: 2.5rem;
+    color: #8e9e70;
+}
+.logo-image {
+    height: 200px;
+    width: auto;
+    display: block;
+    margin: 0 auto;
+    padding-bottom: 0;
+}
+.navbar {
+    background-color: #38563a;
+    /*background-color: #335b36;*/
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 2rem;
+}
+
+.navbar .logo a {
+    color: rgb(222, 228, 193);
+    text-decoration: none;
+    font-size: 2rem;
+    font-weight: bold;
+    transition: color 0.3s ease, transform 0.3s ease
+}
+
+.nav-links {
+    list-style-type: none;
+    display: flex;
+}
+
+.nav-links li {
+    margin: 0 15px;
+    padding-bottom: 5px; /* Add a small padding to accommodate the border */
+    border-bottom: 1px solid white;
+}
+
+.nav-links a {
+    color: rgb(222, 228, 193);
+    text-decoration: none;
+    font-size: 1.5rem;
+}
+
+.nav-links a:hover {
+    color: #8bc34a;
+}
+
+.dropdown {
+    float: left;
+    overflow: hidden;
+}
+
+.dropdown .dropdown-button {
+    border: none;
+    outline: none;
+    background-color: inherit;
+    font-family: inherit;
+    margin: 0;
+    padding: 14px 16px;
+    cursor: pointer;
+}
+
+.dropdown:hover .dropdown-button {
+    background-color: #3e8e41;
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #cedea6;
+    min-width: 160px;
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+    z-index: 1;
+}
+
+.dropdown-content a {
+    color: black;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+    font-weight: normal;
+}
+
+.dropdown-content a:hover {
+    background-color: #f1f1f1;
+    font-weight: bold;
+}
+
+.dropdown:hover .dropdown-content {
+    display: block;
+}
+
+
+footer {
+    background: linear-gradient(to right, #483e4a, #6fc76f);
+    color: #ffffff;
+    padding: 20px 10px;
+    text-align: center;
+    font-family: Arial, sans-serif;
+}
+
+.footer-container p {
+    margin: 0;
+    font-size: 1em;
+    color: #d3d3d3;
+}
+
+footer a {
+    color: #6fc76f;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+footer a:hover {
+    text-decoration: underline;
+}
+
+

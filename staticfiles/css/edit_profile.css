@@ -1,0 +1,108 @@
+.container {
+    max-width: 600px;
+    margin: 2rem auto;
+    padding: 2rem;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+h1 {
+    text-align: center;
+    margin-bottom: 2rem;
+    font-size: 2rem;
+    color: #cedea6;
+    font-family: 'Dancing Script', cursive;
+}
+
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    align-items: center;
+}
+
+
+form {
+    width: 100%;
+    max-width: 400px;
+    margin: 12px;
+}
+
+form label {
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 0.5rem;
+}
+
+form input,
+form textarea,
+form select {
+    width: 100%;
+    padding: 0.75rem;
+    font-size: 1rem;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    outline: none;
+    transition: border-color 0.3s;
+}
+
+form input:focus,
+form textarea:focus,
+form select:focus {
+    border-color: #2b7a4b;
+}
+
+button {
+    padding: 0.75rem 1.5rem;
+    font-size: 1rem;
+    color: #fff;
+    background: linear-gradient(#303d30, 20%, #aad294);
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    display: block;
+    margin: 10px 0 0 105px;
+}
+
+button:hover {
+    background-color: #1d5f37;
+}
+
+button:focus {
+    outline: none;
+}
+
+a.button {
+    display: inline-block;
+    text-align: center;
+    margin-top: 1rem;
+    padding: 0.75rem 1.5rem;
+    font-size: 1rem;
+    font-weight: bold;
+    color: #cedea6;
+    background-color: #303d30;
+    border-radius: 5px;
+    text-decoration: none;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+a.button:hover {
+    background-color: #232a23;
+    color: #c3e866;
+    text-decoration: none;
+}
+
+a.button:focus {
+    outline: 2px solid #1d571e;
+    outline-offset: 2px;
+}
+
+h2 {
+    text-align: center;
+    color: #ff6f61;
+    margin-top: 2rem;
+    font-size: 1.5rem;
+}

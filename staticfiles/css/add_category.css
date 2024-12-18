@@ -1,0 +1,104 @@
+.add-category{
+    max-width: 600px;
+    margin: 2rem auto;
+    padding: 2rem;
+    background-color: #fcf6f3;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+
+h1 {
+    font-family: 'Arial', sans-serif;
+    text-align: center;
+    margin-bottom: 2rem;
+    font-size: 2rem;
+    color: #303d30;
+    border-bottom: 2px solid #6fc76f;
+}
+
+form {
+    width: 100%;
+    max-width: 500px;
+    margin: 12px;
+}
+
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    align-items: stretch;
+}
+
+form label {
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 0.5rem;
+}
+
+form input,
+form textarea,
+form select {
+    width: 100%;
+    padding: 0.75rem;
+    font-size: 1rem;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    outline: none;
+    transition: border-color 0.3s;
+}
+
+form input:focus,
+form textarea:focus,
+form select:focus {
+    border-color: #2b7a4b;
+}
+
+button,
+a.button {
+    padding: 0.75rem 1.5rem;
+    font-size: 1rem;
+    color: #fff;
+    background: linear-gradient(#303d30, 20%, #aad294);
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    display: inline-block;
+    margin: 10px;
+    text-decoration: none;
+    text-align: center;
+}
+
+button:hover,
+a.button:hover {
+    background-color: #1d5f37;
+}
+
+button:focus,
+a.button:focus {
+    outline: none;
+}
+
+.button-group {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+    margin-top: 20px;
+}
+
+a.button:focus {
+    outline: 2px solid #1d571e;
+    outline-offset: 2px;
+}
+
+h2 {
+    text-align: center;
+    color: #ff6f61;
+    margin-top: 2rem;
+    font-size: 1.5rem;
+}

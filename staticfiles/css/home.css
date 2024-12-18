@@ -1,0 +1,101 @@
+
+.hero {
+    background: linear-gradient(to right, #483e4a, #6fc76f);
+    color: #cedea6;
+    text-align: center;
+    padding: 100px 20px;
+}
+
+.hero h1 {
+    font-size: 3.5rem;
+    margin-bottom: 20px;
+    font-family: 'Dancing Script', cursive;
+}
+
+.hero p {
+    font-size: 1.5rem;
+    margin-bottom: 30px;
+    font-family: 'Patrick Hand', cursive;
+}
+
+.hero .btn-primary {
+    background-color: #303d30;
+    color: white;
+    text-decoration: none;
+    padding: 12px 30px;
+    border-radius: 5px;
+    font-size: 1.2rem;
+    transition: background-color 0.3s;
+}
+
+.hero .btn-primary:hover {
+    background-color: #38563a;
+}
+
+.cards {
+    display: flex;
+    justify-content: space-around;
+    padding: 50px 20px;
+    background: linear-gradient(to right, #483e4a, #6fc76f);
+    gap: 20px;
+    flex-wrap: wrap;
+}
+
+.card {
+    background-color: #e5ece3;
+    width: 30%;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.card img {
+    width: 100%;
+    border-radius: 8px;
+    margin-bottom: 15px;
+}
+
+.card h3 {
+    font-size: 1.8rem;
+    color: #303d30;
+    margin-bottom: 15px;
+    font-family: "Dancing Script", cursive;
+}
+
+.card p {
+    font-size: 1.2rem;
+    color: #666;
+    margin-bottom: 20px;
+}
+
+.card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
+.btn-primary {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: #596b59;
+    color: #ffffff;
+    text-decoration: none;
+    font-weight: bold;
+    border-radius: 5px;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    text-align: center;
+    font-family: Arial, sans-serif;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.btn-primary:hover {
+    background-color: #5cb85c;
+    transform: translateY(-3px);
+    box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15);
+}
+
+.btn-primary:active {
+    background-color: #4cae4c;
+    transform: translateY(1px);
+    box-shadow: 0 3px 5px rgba(0, 0, 0, 0.2);
+}
