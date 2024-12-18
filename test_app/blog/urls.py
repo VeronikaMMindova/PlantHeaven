@@ -22,7 +22,6 @@ urlpatterns = [
     path('delete_plant/<int:pk>/', delete_plant, name='delete_plant'),
     path('post/<int:pk>/delete/', DeletePostView.as_view(), name='confirm_delete_post'),
     path('add_category/', AddCategoryView.as_view(), name='add_category'),
-    # path('post/<int:post_id>/delete_confirm/', confirm_delete_post, name='confirm_delete_post'),
     path('post/<int:pk>/update/', UpdatePostView.as_view(), name='update_post'),
     path('post/<int:post_id>/comment/', add_comment, name='add_comment'),
 ]

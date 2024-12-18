@@ -60,7 +60,10 @@ class AddPostView(CreateView):
     success_url = reverse_lazy('home')
 
     def form_valid(self, form):
-        form.instance.author = self.request.user.profile
+        if self.request.user.is_authenticated:
+            form.instance.author = self.request.user.profile
+        else:
+            raise PermissionDenied("You must be logged in to create a post.")
         return super().form_valid(form)
 
 class UpdatePostView(UpdateView):
