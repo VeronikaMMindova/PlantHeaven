@@ -49,6 +49,7 @@ class PlantModelTests(TestCase):
         self.category = Category.objects.create(name='Test Category')
 
     def test_plant_creation(self):
+        # Creating a Plant instance
         plant = Plant.objects.create(
             name='Rose',
             habitat='Garden',
