@@ -12,7 +12,7 @@ for choice in choices:
 class PostForm(forms.ModelForm):
     class Meta:
         model = Post
-        fields = ('title', 'image', 'category', 'description', 'snippet', 'author')
+        fields = ('title', 'image', 'category', 'description', 'snippet')
         widgets = {
             'title': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Enter post title'}),
             'image': forms.ClearableFileInput(attrs={'class': 'form-control'}),
@@ -27,18 +27,25 @@ class PostForm(forms.ModelForm):
             }),
         }
 
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-        self.fields['author'].queryset = Profile.objects.filter(is_superuser=True)
+    # def __init__(self, *args, **kwargs):
+    #     super().__init__(*args, **kwargs)
+    #     self.fields['author'].queryset = Profile.objects.filter(is_superuser=True)
 class EditForm(forms.ModelForm):
     class Meta:
         model = Post
         fields = ('title', 'category', 'description', 'snippet', 'image')
         widgets = {
             'title': forms.TextInput(attrs={'class': 'form-control'}),
-            'category': forms.Select(choices=choices, attrs={'class': 'form-control'}),
-            'description': forms.Textarea(attrs={'class': 'form-control'}),
-            'snippet': forms.Textarea(attrs={'class': 'form-control'}),
+            'category': forms.Select(attrs={'class': 'form-control'}),
+            # 'category': forms.Select(choices=choices, attrs={'class': 'form-control'}),
+            'description': forms.Textarea(attrs={
+                'class': 'form-control',
+                'placeholder': 'Write a description...',
+                'rows': 5
+            }),
+            'snippet': forms.TextInput(attrs={
+                'class': 'form-control',
+            }),
             'image': forms.ClearableFileInput(attrs={'class': 'form-control'})
         }
 

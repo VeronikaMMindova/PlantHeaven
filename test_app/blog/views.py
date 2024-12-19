@@ -8,8 +8,7 @@ from django.views import View
 from django.views.generic import DetailView, CreateView, UpdateView
 
 from test_app.blog.models import Post, Category, Plant, Comment
-from test_app.blog.forms import PostForm,  CommentForm, CategoryForm, PlantForm
-
+from test_app.blog.forms import PostForm, CommentForm, CategoryForm, PlantForm, EditForm
 
 
 class PostDetailView(DetailView):
@@ -67,19 +66,32 @@ class AddPostView(CreateView):
 
 class UpdatePostView(UpdateView):
     model = Post
-    form_class = PostForm
+    form_class = EditForm
     template_name = 'blog/update_post.html'
     context_object_name = 'post'
-
-    def get_object(self):
+    success_url = reverse_lazy('our_blog')
+    def get_object(self, queryset=None):
         post = get_object_or_404(Post, pk=self.kwargs['pk'])
         if post.author.user != self.request.user:
-            raise PermissionDenied
+            raise PermissionDenied("You do not have permission to edit this post.")
         return post
 
     def form_valid(self, form):
-        form.save()
-        return redirect('post_details', pk=self.object.pk)
+        form.instance.author = self.request.user.profile
+        return super().form_valid(form)
+
+    # def get_object(self):
+    #     post = get_object_or_404(Post, pk=self.kwargs['pk'])
+    #     if post.author.user != self.request.user:
+    #         raise PermissionDenied
+    #     return post
+    #
+    # def form_valid(self, form):
+    #     form.save()
+    #     return redirect('post_details', pk=self.object.pk)
+
+
+
 
 
 

@@ -21,7 +21,7 @@
                 {% for post in deleted_posts %}
                     <li>
                         <strong>{{ post.title }}</strong> - Deleted by {{ post.author }}
-                        on {{ post.updated_at|date:"Y-m-d H:i" }}
+                        on {{ post.updated_at|date:"d-m-Y H:i" }}
                     </li>
                 {% endfor %}
             </ul>
@@ -37,7 +37,7 @@
             <ul class="active-users">
                 {% for user in active_users %}
                     <li>
-                        {{ user.username }} - Last login: {{ user.last_login|date:"Y-m-d H:i" }}
+                        {{ user.username }} - Last login: {{ user.last_login|date:"d-m-Y H:i" }}
                     </li>
                 {% endfor %}
             </ul>
@@ -54,8 +54,8 @@
                 {% for comment in latest_comments %}
                     <li>
                         <strong>{{ comment.author }}</strong> on <em>{{ comment.post.title }}</em>:
-                        <p>{{ comment.body }}</p>
-                        <small>Commented on {{ comment.created_at|date:"Y-m-d H:i" }}</small>
+                        <p>{{ comment.content }}</p>
+                        <small>Commented on {{ comment.created_at|date:"d-m-Y H:i" }}</small>
                     </li>
                 {% endfor %}
             </ul>

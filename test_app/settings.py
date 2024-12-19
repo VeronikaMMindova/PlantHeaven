@@ -21,12 +21,12 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 # SECURITY WARNING: keep the secret key used in production secret!
 #SECRET_KEY = 'django-insecure-vw_!ragq0hr@^vv2tqcrd*(97ney9$+aocswy%t3w8gz)!6*e$'
-SECRET_KEY = os.environ.get('SECRET_KEY')
-# SECRET_KEY = "b13ffe9ba7abd3b202c0868f75100e88"
+# SECRET_KEY = os.environ.get('SECRET_KEY')
+SECRET_KEY = "b13ffe9ba7abd3b202c0868f75100e88"
 
 # SECURITY WARNING: don't run with debug turned on in production!
-# DEBUG = True
-DEBUG = os.environ.get('DEBUG', 'False').lower() == 'true'
+DEBUG = True
+# DEBUG = os.environ.get('DEBUG', 'False').lower() == 'true'
 
 
 
@@ -101,14 +101,14 @@ WSGI_APPLICATION = 'test_app.wsgi.application'
 # }
 # INTERNAL DATEBASE URL: dpg-cthg4b23esus73b612ng-a
 # EXTERNAL DATEBASE URL: dpg-cthg4b23esus73b612ng-a.oregon-postgres.render.com
-database_host = os.environ.get('DATABASE_URL', '')
+# database_host = os.environ.get('DATABASE_URL', '')
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
         'NAME': 'green_forum_database',
         'USER': 'green_forum_database_user',
         'PASSWORD': 'ry3zSAfatjWapFjQoR6MNZQlOcVQwFgM',
-        'HOST': database_host,
+        'HOST': "dpg-cthg4b23esus73b612ng-a.oregon-postgres.render.com",
         'PORT': '5432',
     }
 }

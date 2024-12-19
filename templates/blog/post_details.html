@@ -30,8 +30,7 @@
                 </button>
             </form>
 
-            <!-- Delete Button (Only for the Author) -->
-            {% if request.user == post.author.user %}
+            {% if request.user.id == post.author.user.id %}
                 <form method="post" action="{% url 'confirm_delete_post' post.pk %}">
                     {% csrf_token %}
                     <button type="submit" class="btn btn-danger">Delete Post</button>
@@ -41,7 +40,6 @@
         {% else %}
             <p><a href="{% url 'login' %}">Log in</a> to like or delete this post.</p>
         {% endif %}
-     <!-- Comments Section -->
     <div class="comments-section">
         <h2>Comments</h2>
 
@@ -60,7 +58,6 @@
         {% endif %}
 
         {% if request.user.is_authenticated %}
-            <!-- Comment Form -->
             <form method="post">
                 {% csrf_token %}
                 <textarea name="comment_text" class="form-control" rows="3" placeholder="Add your comment..."></textarea>

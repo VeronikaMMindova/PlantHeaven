@@ -19,7 +19,7 @@
                 {% if plant.image %}
                     <img src="{{ plant.image.url }}" alt="{{ plant.name }}">
                 {% else %}
-                    <img src="#" alt="No image available">
+                    <img src="{% static 'images/default_image.png' %}" alt="No image available">
                 {% endif %}
                 {% if plant.wikipedia_url %}
                     <a href="{{ plant.wikipedia_url }}" target="_blank" class="wikipedia-link">Wikipedia</a>

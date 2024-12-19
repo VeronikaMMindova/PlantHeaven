@@ -134,7 +134,7 @@ def profile_delete(request, pk):
 
 #admin's crud - Post model
 def post_list(request):
-    posts = Post.objects.all()
+    posts = Post.objects.all().order_by('-updated_at')
     return render(request, 'users/private/post_list.html', {'posts': posts})
 
 @login_required
@@ -165,7 +165,7 @@ def post_delete(request, pk):
 #admin's crud - Comment model
 @user_passes_test(admin_check)
 def comment_list(request):
-    comments = Comment.objects.all()
+    comments = Comment.objects.all().order_by('-created_at')
     context = {'comments': comments}
     return render(request, 'users/private/comment_list.html', context)
 
@@ -258,9 +258,9 @@ def category_delete(request, pk):
 
 @user_passes_test(staff_check)
 def admin_dashboard(request):
-    deleted_posts = Post.objects.filter(is_deleted=True)
+    deleted_posts = Post.objects.filter(is_deleted=True).order_by('-updated_at')
     thirty_days_ago = timezone.now() - timedelta(days=30)
-    active_users = User.objects.filter(last_login__gte=thirty_days_ago)
+    active_users = User.objects.filter(last_login__gte=thirty_days_ago).order_by('-last_login')
 
     latest_comments = Comment.objects.all().order_by('-created_at')[:5]
 

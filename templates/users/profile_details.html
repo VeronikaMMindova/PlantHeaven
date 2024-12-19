@@ -19,8 +19,10 @@
     <div class="profile-details">
         {% csrf_token %}
         {{ form.as_p}}
-         <p><strong>Name:</strong> {{ profile.user.get_full_name|default:"Not provided" }}</p>
-        <p><strong>Email:</strong> {{ profile.user.email }}</p>
+        <p><strong>First Name:</strong>{{ profile.first_name|default:"Not provided" }}</p>
+        <p><strong>Last Name:</strong>{{ profile.last_name|default:"Not provided" }}</p>
+{#         <p><strong>Name:</strong> {{ profile.user.get_full_name|default:"Not provided" }}</p>#}
+        <p><strong>Email:</strong> {{ profile.user.email|default:"No email added yet." }}</p>
         <p><strong>Bio:</strong> {{ profile.bio|default:"No bio added yet." }}</p>
         <p>
             <strong>Facebook:</strong>

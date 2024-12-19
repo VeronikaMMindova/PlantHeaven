@@ -16,7 +16,7 @@
                         {% if post.image %}
                             <img class="card-img-top" src="{{ post.image.url }}" alt="{{ post.title }}">
                         {% else %}
-                            <img class="card-img-top" src="#" alt="No image available">
+                            <img class="card-img-top" src="{% static 'images/default_image.png' %}"  alt="No image available">
                         {% endif %}
                         <div class="card-body">
                             <h5 class="card-title">{{ post.title }}</h5>
