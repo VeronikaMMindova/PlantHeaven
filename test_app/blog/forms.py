@@ -32,7 +32,7 @@ class PostForm(forms.ModelForm):
             super().__init__(*args, **kwargs)
             self.fields['is_deleted'].queryset = Profile.objects.filter(is_superuser=True)
 
-    
+
 class EditForm(forms.ModelForm):
     class Meta:
         model = Post

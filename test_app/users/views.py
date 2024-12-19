@@ -131,7 +131,7 @@ def profile_delete(request, pk):
 
 #admin's crud - Post model
 def post_list(request):
-    posts = Post.objects.filter(is_deleted=False).order_by('-updated_at')
+    posts = Post.objects.all().order_by('-updated_at')
     return render(request, 'users/private/post_list.html', {'posts': posts})
 
 @login_required
