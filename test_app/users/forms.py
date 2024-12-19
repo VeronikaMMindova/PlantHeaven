@@ -56,10 +56,6 @@ class UserRegistrationForm(forms.ModelForm):
             raise forms.ValidationError("Passwords do not match.")
         return cleaned_data
 
-    def clean_password(self):
-        password = self.cleaned_data.get('password')
-        custom_password_validator(password)
-        return password
 
 
 # class ProfileForm(forms.ModelForm):

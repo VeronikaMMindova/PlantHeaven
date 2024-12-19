@@ -23,7 +23,7 @@
             <tr>
                 <td>{{ comment.id }}</td>
                 <td>{{ comment.post.title }}</td>
-                <td>{{ comment.post.author }}</td>
+                <td>{{ comment.user }}</td>
                 <td>{{ comment.content|truncatewords:10 }}</td>
                 <td>{{ comment.created_at|date:"d-m-Y H:i" }}</td>
                 <td>

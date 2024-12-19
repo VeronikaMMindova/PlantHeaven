@@ -27,7 +27,7 @@ a.btn-create:hover {
 }
 
 table {
-    width: 40%;
+    width: 30%;
     margin: 12px auto;
     background-color: #fff;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
@@ -58,8 +58,8 @@ table td {
 }
 
 td.buttons {
-    text-align: right;
-    white-space: nowrap; /* Prevent buttons from wrapping */
+    text-align: center;
+    white-space: nowrap;
 }
 
 .btn {

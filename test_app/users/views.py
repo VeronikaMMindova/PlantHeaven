@@ -3,16 +3,14 @@ from datetime import timedelta
 from django.contrib import messages
 from django.contrib.auth import login, logout, authenticate
 from django.contrib.auth.decorators import user_passes_test, login_required
-from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.models import User
-from django.contrib.auth.views import LoginView, PasswordChangeView
+from django.contrib.auth.views import PasswordChangeView
 from django.db.models import Count
 from django.shortcuts import render, get_object_or_404, redirect
 from django.urls import reverse_lazy
 from django.utils import timezone
-from django.utils.timezone import now
-from django.views.generic import CreateView, UpdateView, DetailView, FormView
+from django.views.generic import CreateView, FormView
 
 from test_app.blog.forms import PostForm, CommentForm, PlantForm
 from test_app.blog.models import Post, Comment, Plant, Category
@@ -27,7 +25,7 @@ class UserRegistrationView(CreateView):
 
     def form_valid(self, form):
         user = form.save(commit=False)
-        user.set_password(form.cleaned_data['password'])  # Hash the password
+        user.set_password(form.cleaned_data['password'])
         user.save()
         login(self.request, user)
         Profile.objects.create(user=user)
@@ -36,7 +34,6 @@ class UserRegistrationView(CreateView):
 
 class UserLoginView(FormView):
     template_name = 'users/login.html'
-    # authentication_form = AuthenticationForm
     form_class = UserLoginForm
     success_url = reverse_lazy('home')
 
@@ -134,7 +131,7 @@ def profile_delete(request, pk):
 
 #admin's crud - Post model
 def post_list(request):
-    posts = Post.objects.all().order_by('-updated_at')
+    posts = Post.objects.filter(is_deleted=False).order_by('-updated_at')
     return render(request, 'users/private/post_list.html', {'posts': posts})
 
 @login_required
@@ -212,7 +209,6 @@ def plant_edit(request, pk):
     if request.method == 'POST':
         if form.is_valid():
             form.save()
-            # messages.success(request, f"Plant {'created' if pk == 0 else 'updated'} successfully!")
             return redirect('plants_list')
         else:
             messages.error(request, "Please correct the errors below.")
@@ -224,7 +220,6 @@ def plant_delete(request, pk):
     plant = get_object_or_404(Plant, pk=pk)
     if request.method == 'POST':
         plant.delete()
-        # messages.success(request, "Plant deleted successfully!")
         return redirect('plants_list')
 
     return render(request, 'users/private/delete_plant.html', {'plant': plant})
