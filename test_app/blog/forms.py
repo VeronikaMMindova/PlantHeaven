@@ -12,7 +12,7 @@ for choice in choices:
 class PostForm(forms.ModelForm):
     class Meta:
         model = Post
-        fields = ('title', 'image', 'category', 'description', 'snippet')
+        fields = ('title', 'image', 'category', 'description', 'snippet', 'is_deleted')
         widgets = {
             'title': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Enter post title'}),
             'image': forms.ClearableFileInput(attrs={'class': 'form-control'}),
@@ -25,11 +25,14 @@ class PostForm(forms.ModelForm):
             'snippet': forms.TextInput(attrs={
                 'class': 'form-control',
             }),
+            'is_deleted': forms.CheckboxInput(),
         }
 
-    # def __init__(self, *args, **kwargs):
-    #     super().__init__(*args, **kwargs)
-    #     self.fields['author'].queryset = Profile.objects.filter(is_superuser=True)
+        def __init__(self, *args, **kwargs):
+            super().__init__(*args, **kwargs)
+            self.fields['is_deleted'].queryset = Profile.objects.filter(is_superuser=True)
+
+    
 class EditForm(forms.ModelForm):
     class Meta:
         model = Post
